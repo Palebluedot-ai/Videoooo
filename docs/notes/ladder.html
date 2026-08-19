@@ -203,6 +203,60 @@ th{
 tbody tr:last-child td{border-bottom:0}
 td .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px}
 
+/* ── pipeline ── */
+.pipe{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 24px;align-items:stretch}
+.pipe .st{
+  flex:1 1 96px;background:var(--surface);border:1px solid var(--line);
+  border-radius:2px;padding:10px 11px;position:relative;min-width:96px
+}
+.pipe .st b{display:block;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.02em}
+.pipe .st span{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px;line-height:1.45}
+.pipe .st.gate{border-color:var(--warn);background:var(--warn-soft)}
+.pipe .st.gate b{color:var(--warn)}
+.pipe .st.gate::after{
+  content:"⏸ 人工闸";position:absolute;top:-8px;right:6px;font-family:var(--mono);
+  font-size:9px;letter-spacing:.06em;background:var(--warn);color:var(--ground);
+  padding:1px 5px;border-radius:2px
+}
+.limits{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.limits span{
+  font-family:var(--mono);font-size:12px;border:1px solid var(--line-2);
+  border-radius:2px;padding:5px 10px;font-variant-numeric:tabular-nums;color:var(--ink-2)
+}
+.limits b{color:var(--ink);font-weight:600}
+
+/* ── aspect grid ── */
+.aspects{display:flex;flex-direction:column;gap:8px;margin:6px 0 20px}
+.asp{
+  display:grid;grid-template-columns:26px 1fr;gap:14px;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:2px;padding:13px 15px
+}
+.asp .i{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent)}
+.asp .nm{font-size:15px;font-weight:700;margin-bottom:3px}
+.asp .df{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.asp code{
+  font-family:var(--mono);font-size:12.5px;background:var(--surface-2);
+  padding:1px 5px;border-radius:2px;border:1px solid var(--line)
+}
+
+/* ── sheet kit ── */
+.kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:9px;margin:6px 0 18px}
+.kit div{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:12px 14px;font-size:13.5px;line-height:1.55}
+.kit b{display:block;font-size:14px;font-weight:700;margin-bottom:3px}
+.kit span{color:var(--ink-2);font-size:12.5px}
+pre{
+  font-family:var(--mono);font-size:13px;line-height:1.6;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:2px;
+  padding:14px 16px;overflow-x:auto;margin:6px 0 4px;white-space:pre-wrap;color:var(--ink)
+}
+.views{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 4px}
+.views span{
+  font-family:var(--mono);font-size:12.5px;background:var(--accent-soft);color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+  border-radius:2px;padding:5px 11px;font-weight:600
+}
+
 /* ── tells ── */
 .tells{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:10px;margin-top:8px}
 .tell{
@@ -254,7 +308,7 @@ footer b{color:var(--ink-2)}
 <header>
   <div class="eyebrow">Videoooo · 学习文档 01</div>
   <h1>AI 视频能力阶梯</h1>
-  <p class="standfirst">一份可以一级一级打勾的学习路径。地基是三块经过对抗验证的学术证据，阶梯本身是构造的——每一处的证据等级都标出来了，你可以推翻任何一级。</p>
+  <p class="standfirst">学什么、怎么算过关、<b>具体怎么做</b>。七级阶梯逐级打勾，配一套从 48.9k★ 开源流水线源文件里逐字读出来的工业级 SOP——分镜、三视图、设定集。每一处的证据等级都标出来了，你可以推翻任何一级。</p>
   <div class="meta">
     <span>2026-08-20</span>
     <span>2 轮 deep-research</span>
@@ -306,7 +360,7 @@ footer b{color:var(--ink-2)}
 
 <section>
   <h2><span class="num">03 / 阶梯</span>七级，逐级打勾</h2>
-  <p class="lede"><span class="tag t-inf">我构造的</span>地基是上一节的证据，编排是我的推论。点开每一级看判据、练习、卡点。勾选状态存在你自己的浏览器里。</p>
+  <p class="lede"><span class="tag t-inf">我构造的</span>地基是上一节的证据，编排是我的推论。点开每一级看判据、练习、卡点。<b>「具体怎么做」在下一节的 SOP。</b>勾选状态存在你自己的浏览器里。</p>
 
   <div class="prog">
     <span>进度</span><div class="track"><i id="pbar"></i></div><span id="pnum">0 / 7</span>
@@ -317,14 +371,17 @@ footer b{color:var(--ink-2)}
     <details class="rung" data-k="L0"><summary class="rung-head">
       <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
       <span class="lv">L0</span>
-      <span class="rung-title">看懂<small>先长眼睛 · 3–5 小时</small></span>
+      <span class="rung-title">前期设定<small>设定集 + 分镜表 · 一帧都不生成 · 1–2 天</small></span>
       <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
     </summary><div class="rung-body"><dl>
-      <div class="field hi"><dt>判据</dt><dd>给你一条 AI 片，能指出 <b>≥5 个</b>破绽并说出成因（对照第 04 节的 12 个破绽）</dd></div>
-      <div class="field"><dt>练习</dt><dd>找 3 条 AI 短片 + 1 条专业实拍片，<b>逐条对照 12 tells 打分</b>，做成表格</dd></div>
-      <div class="field"><dt>工具</dt><dd>LibTV 的「逐帧拉片」把影视学院的拉片训练法产品化了；或任何播放器逐帧看</dd></div>
-      <div class="field"><dt>卡点</dt><dd>觉得「都挺好啊」——说明还没过关。看不出破绽，后面每一级的自检都是假的，所以这一级在最底层</dd></div>
-    </dl></div></details>
+      <div class="field hi"><dt>判据</dt><dd>交付两份东西：<br>① 一套角色 <b>turnaround</b>（正面 / 3⁄4 前 / 侧面 / 3⁄4 后 / 背面）+ 色标，每块标 HEX<br>② 一张 <b>5-Aspect 分镜表</b>，每个镜头五维全填</dd></div>
+      <div class="field"><dt>练习</dt><dd>给你想做的题材做完整前期包：beat map（Hook → Escalation → Reveal → Landing）→ turnaround → 5-Aspect 分镜表。<b>一帧视频都不生成</b></dd></div>
+      <div class="field"><dt>工具</dt><dd>Nano Banana / Seedream 出 turnaround（prompt 见第 04 节）· 表格软件写分镜</dd></div>
+      <div class="field"><dt>卡点</dt><dd>想跳过直接写 prompt。<b>五段式是表达层，5-Aspect 是规划层</b>——没想清楚，翻译得再漂亮也是空的</dd></div>
+      <div class="field"><dt>为什么在最底层</dt><dd>原文：<b>「Vague hero-frame specs are the single most common failure mode」</b>。后面每一级都在消费这一级的产出</dd></div>
+    </dl>
+    <div class="note"><b>这一级是方法，不是测试。</b>原来的 L0 是「拉片找破绽」——那是诊断，已降级为贯穿全程的验收检查表（第 05 节）。</div>
+    </div></details>
 
     <details class="rung" data-k="L1"><summary class="rung-head">
       <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
@@ -332,7 +389,7 @@ footer b{color:var(--ink-2)}
       <span class="rung-title">单镜头出片<small>手感 · 1–2 天</small></span>
       <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
     </summary><div class="rung-body"><dl>
-      <div class="field hi"><dt>判据</dt><dd>一条 5–10 秒片段，<b>12 个破绽里 0 命中</b></dd></div>
+      <div class="field hi"><dt>判据</dt><dd>一条 5–10 秒片段，<b>12 破绽验收表 0 命中</b>（这张表从这一级起每级都过）</dd></div>
       <div class="field"><dt>练习</dt><dd>同一条 prompt 抽 <b>10 次</b>，逐条标注命中了哪几个破绽，做成表</dd></div>
       <div class="field"><dt>工具</dt><dd>Seedance（BytePlus / 即梦 / LibTV，¥0.4 秒起）· 五段式提示词 · <span class="mono">/shortfilm-prompt</span> skill</dd></div>
       <div class="field"><dt>卡点</dt><dd>以为是 prompt 写得不好——<b>其实是选题落在了模型崩溃维度</b>。想要「主角边走边变色」= dynamic attribute change，模型级得分 8–24%，换谁写都一样</dd></div>
@@ -359,7 +416,8 @@ footer b{color:var(--ink-2)}
     </summary><div class="rung-body"><dl>
       <div class="field hi"><dt>判据</dt><dd>3+ 个镜头里同一角色 / 场景，<b>人眼一眼认得出是同一个</b></dd></div>
       <div class="field"><dt>练习</dt><dd>做一个 3 镜头连续片段，对比「只靠文字描述」vs「参考图条件化」的一致性差距</dd></div>
-      <div class="field"><dt>工具</dt><dd>参考图条件化（ingredients）· 每条 prompt <b>逐字重复</b>角色描述 · 角色资产库</dd></div>
+      <div class="field"><dt>工具</dt><dd>参考图条件化（ingredients）· 每条 prompt <b>逐字重复</b>角色描述 · <b>L0 做的 turnaround 当资产库</b></dd></div>
+      <div class="field hi"><dt>关键</dt><dd><b>喂参考图，喂的应该是 turnaround，不是随手一张图。</b>一张正面照只锁住正面，模型转侧面就自由发挥；turnaround 锁 360°。这是角色一致性从玄学变成工程的地方</dd></div>
       <div class="field"><dt>卡点</dt><dd>参考图质量不够。<b>「图片质量不高就别喂参考图」</b>——AI 会模仿画风而不是模仿设计</dd></div>
     </dl>
     <div class="note"><span class="tag t-inf">我的类比</span>context engineering ↔ 资产工程这一轴，两轮研究<b>零存活证据</b>。唯一的机构级线索因验证器报错，既未证实也未证伪。</div>
@@ -409,8 +467,89 @@ footer b{color:var(--ink-2)}
 </section>
 
 <section>
-  <h2><span class="num">04 / 检查表</span>「一眼假」的 12 个破绽</h2>
-  <p class="lede">学术表述是 superficial / intrinsic 之分，实操版是这 12 条。<span class="tag t-no">红边</span>落在 intrinsic 一侧（物理 / 解剖，模型崩溃）<span class="tag t-inf" style="margin-left:6px">黄边</span>落在 superficial 一侧（后期可修）。两套框架对得上，互为印证。</p>
+  <h2><span class="num">04 / SOP</span>工业级怎么做：流水线 · 分镜 · 三视图</h2>
+  <p class="lede"><span class="tag t-ev">源文件逐字读取</span>下面这套不是我编的流程——来自 OpenMontage（48.9k★）的 cinematic 流水线源文件，10 个 director 角色。工业级的意思不是「画得好」，是<b>每个环节有交付物、有验收、有闸</b>。</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:8px 0 12px">主流水线：8 阶段</h3>
+  <div class="pipe">
+    <div class="st"><b>research</b><span>调研简报</span></div>
+    <div class="st gate"><b>proposal</b><span>锁 delivery_promise + renderer_family</span></div>
+    <div class="st"><b>script</b><span>beat map</span></div>
+    <div class="st"><b>scene_plan</b><span>分镜 + hero_moments</span></div>
+    <div class="st gate"><b>assets</b><span>出样再批量</span></div>
+    <div class="st"><b>edit</b><span>剪辑决策</span></div>
+    <div class="st"><b>compose</b><span>合成调色</span></div>
+    <div class="st"><b>publish</b><span>交付</span></div>
+  </div>
+  <div class="limits">
+    <span>每阶段最多返工 <b>3</b></span>
+    <span>每对阶段回退 <b>1</b></span>
+    <span>全流程回退 <b>3</b></span>
+    <span>墙钟上限 <b>12 min</b></span>
+    <span>预算告警 <b>90%</b></span>
+  </div>
+  <div class="note crit" style="margin-top:18px"><b>静默降级禁令</b>（原文）：<i>"If Remotion or clip generation breaks a motion-led brief, <b>stop and bubble the issue to the user instead of quietly switching mediums.</b>"</i><br>合成阶段同理——<i>"Silent swap to another runtime is a <b>CRITICAL governance violation</b>."</i> 工具跑不动就上报，不许偷偷换便宜路子交差。</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 6px">剧本层：beat map 四件套</h3>
+  <p class="lede" style="margin-bottom:12px"><code style="font-family:var(--mono);font-size:14px">Hook → Escalation → Reveal → Landing</code> ——长片可加<b>一个</b> midpoint turn，但 "should not become essay-like"。</p>
+  <p class="lede" style="margin-bottom:8px">必填字段：<code>beat_map</code> · <code>dialogue_selects</code> · <code>title_card_copy</code> · <code>music_turns</code> · <code>silence_windows</code></p>
+  <div class="note" style="margin-bottom:22px"><code>silence_windows</code> 是<b>必填字段</b>——沉默被当作设计对象管理，不是「没声音的地方」。<br>标题卡标准（原文）：<i>"fewer words, more contrast, more whitespace, more timing precision"</i></div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 6px">⭐ 分镜层：5-Aspect Shot Breakdown（强制）</h3>
+  <p class="lede" style="margin-bottom:14px">scene director 的职责原文：决定 <i>"how each cinematic beat will look and transition. <b>This is where mood becomes a visual plan.</b>"</i> 每个 beat——尤其 hero frames——五维必须全部写明。</p>
+  <div class="aspects">
+    <div class="asp"><div class="i">1</div><div><div class="nm">Subject 主体</div><div class="df">type + key visual attributes；<b>若有多个主体，必须写清怎么区分</b></div></div></div>
+    <div class="asp"><div class="i">2</div><div><div class="nm">Subject Motion 主体运动</div><div class="df">actions in <b>temporal order</b>（按时间顺序）；主体↔物体 / 主体↔主体的交互</div></div></div>
+    <div class="asp"><div class="i">3</div><div><div class="nm">Scene 场景</div><div class="df">overlays（<b>单独列！</b>）+ POV + setting + time of day + scene dynamics</div></div></div>
+    <div class="asp"><div class="i">4</div><div><div class="nm">Spatial Framing 空间构图</div><div class="df">shot size + position-in-frame + <b>depth（FG/MG/BG）</b> + camera-height-relative</div></div></div>
+    <div class="asp"><div class="i">5</div><div><div class="nm">Camera 相机</div><div class="df"><b>书写顺序被规定死</b>：<code>playback speed → lens distortion → height → angle → focus/DoF → steadiness → movement</code></div></div></div>
+  </div>
+  <div class="note crit"><b>贴墙上那句</b>（原文）：<i>"<b>Vague hero-frame specs are the single most common failure mode.</b>"</i><br><br><b>Overlays 规则</b>：字幕/图形 <i>"NOT part of the scene's foreground/midground/background depth axis. List them separately in scene metadata."</i> 混进景深轴 = 模型会试着把字幕当场景里的实物渲染。<br><br><b>转场克制</b>：只用一个 small set——hard cut / fade / dissolve / restrained push-in。</div>
+
+  <div class="scroll" style="margin-top:22px"><table>
+    <thead><tr><th></th><th>5-Aspect 分镜</th><th>五段式提示词</th></tr></thead>
+    <tbody>
+      <tr><td><b>是什么</b></td><td><b>规划层</b>——想清楚这个镜头是什么</td><td><b>表达层</b>——把它翻译给模型</td></tr>
+      <tr><td><b>产出</b></td><td>scene_plan（人读的分镜表）</td><td>prompt 文本（模型读的）</td></tr>
+      <tr><td><b>何时用</b></td><td>写 prompt <b>之前</b></td><td>规划完之后</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>弯路警告</b>：直接上五段式写 prompt = 跳过规划层。想都没想清楚，翻译得再漂亮也是空的。</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 6px">⭐ 三视图与角色设定集</h3>
+  <p class="lede" style="margin-bottom:12px">完整 character sheet 六件套——它是<b>沟通契约</b>，不是画着好看。产出于前期，贯穿 concept → final frame，使用者是分镜师、动画师、角色设计、导演。</p>
+  <div class="kit">
+    <div><b>Turnaround</b><span>360° 转身图</span></div>
+    <div><b>Expression Sheet</b><span>表情表：喜/怒/哀/惊/惧</span></div>
+    <div><b>Pose Sheet</b><span>姿态表：T-pose、关键动作、剪影</span></div>
+    <div><b>Props</b><span>道具</span></div>
+    <div><b>Color Palette</b><span>每块<b>必须</b>标 RGB / HEX / Pantone</span></div>
+    <div><b>Annotations</b><span>比例关系、独特特征</span></div>
+  </div>
+  <p class="lede" style="margin-bottom:4px"><b>Turnaround 标准角度：</b></p>
+  <div class="views"><span>正面</span><span>3⁄4 前</span><span>侧面 profile</span><span>3⁄4 后</span><span>背面</span></div>
+
+  <p class="lede" style="margin:24px 0 4px"><b>AI 时代怎么做</b>——拿一张角色参考图，用这条 prompt（原样引用）：</p>
+  <pre>Create a four-panel turnaround for this man to show his frontal,
+his right side, his left side and his back, in a white and grey background.</pre>
+  <div class="note">为什么这么写有效：<b>必须用 "turnaround" 这个词</b>（行业标准的正投影术语，模型认它）· <b>明确列出每一个视图</b>，别指望模型自己补全 · <b>白灰背景</b>制作友好。</div>
+  <div class="note crit"><b>这就是 L3 一致性的源头。</b>参考图条件化喂进去的应该是 turnaround，不是随手一张图——一张正面照只锁住正面，模型转侧面就自由发挥。<br><span class="tag t-inf" style="margin-top:8px">我的推论</span>「turnaround 优于单张参考图」逻辑成立（锁 360° vs 锁一个面），但<b>没找到直接实证</b>——这是你 L3 该亲手验的第一件事。</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 6px">资产层：三条防烧钱规则</h3>
+  <div class="kit" style="grid-template-columns:1fr">
+    <div><b>Sample-before-batch</b><span>原文：<i>"Before batch-generating support assets, produce <b>one sample of each expensive generated type</b> and show the user."</i></span></div>
+    <div><b>Provider disclosure</b><span>出样之前就告知：<i>"exactly which generation path will be used: <b>tool, provider, model or variant, generation mode, why it was selected</b>"</i></span></div>
+    <div><b>Rights notes</b><span>metadata 必须含 <code>rights_notes</code> 做出处留痕 —— 你的仓是 public 的，这条是硬需求</span></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 6px">合成层：保护项与验收</h3>
+  <p class="lede" style="margin-bottom:10px"><b>保护</b>：音频要留 quiet moments / impact moments / clear dialogue / controlled swells；调色与锐化<b>不能伤脸和字</b>；letterbox、24fps 意图、重调色只在真的帮到片子时才用。</p>
+  <p class="lede" style="margin:0"><b>验收四点</b>：opening frame · reveal beat · final landing · subtitle readability</p>
+</section>
+
+<section>
+  <h2><span class="num">05 / 验收表</span>「一眼假」的 12 个破绽 · 每级都过</h2>
+  <p class="lede"><b>这不是一个学习阶段，是贯穿全程的 QC 门。</b>原本它是 L0（拉片找破绽）——那是诊断不是方法，已降级：<b>L1 起每一级交付时都过一遍这张表</b>。工业界的 QC gate 本来就贯穿全程，不是入门考试。<br><br>学术表述是 superficial / intrinsic 之分，实操版是这 12 条。<span class="tag t-no">红边</span>落在 intrinsic 一侧（物理 / 解剖，模型崩溃）<span class="tag t-inf" style="margin-left:6px">黄边</span>落在 superficial 一侧（后期可修）。两套框架对得上，互为印证。</p>
   <div class="tells">
     <div class="tell i"><b><span class="n">01</span>手部变形</b><span>暂停数手指——4 根 / 6 根 / 帧间变化。绕：选不露手的镜头，或构图让手出画</span></div>
     <div class="tell i"><b><span class="n">02</span>切镜后背景物理不一致</b><span>云位置、阴影、光向在两镜间是否守恒。绕：人工控制多镜背景</span></div>
@@ -429,7 +568,7 @@ footer b{color:var(--ink-2)}
 </section>
 
 <section>
-  <h2><span class="num">05 / 映射表</span>编程范式 ↔ AI 视频，诚实版</h2>
+  <h2><span class="num">06 / 映射表</span>编程范式 ↔ AI 视频，诚实版</h2>
   <p class="lede">10 条存活结论 <b>10/10 落在 eval 一轴</b>——这个分布本身就是证据。</p>
   <div class="scroll"><table>
     <thead><tr><th>编程范式</th><th>AI 视频对应物</th><th>证据等级</th></tr></thead>
@@ -446,7 +585,7 @@ footer b{color:var(--ink-2)}
 </section>
 
 <section>
-  <h2><span class="num">06 / 工具</span>全部当日 GitHub API 自核</h2>
+  <h2><span class="num">07 / 工具</span>全部当日 GitHub API 自核</h2>
   <p class="lede">上一轮已经出过一个反面样本：某仓 994★ 但停更 5 个月，issue 区有人问「什么时候更新呢，现在太难用了啊」无人回。<b>star 数不能当维护活跃度用</b>，所以下面每条都标了最后提交日期。</p>
 
   <div class="tool"><div><div class="nm">calesthio/OpenMontage</div><div class="ds">把 AI 编程助手变成完整视频制作工作室。2,104 文件 · <b>138 个 SKILL.md</b> · 12 条生产管线 · 同时带 <span class="mono">.claude</span> <span class="mono">.cursor</span> <span class="mono">.codex</span> · 38 位贡献者。两天前刚合并外部贡献的 Seedance 2.5 skill。<br><b style="color:var(--warn)">⚠ AGPL-3.0 是传染性 copyleft</b>，商用前看清楚</div></div>
@@ -472,7 +611,7 @@ footer b{color:var(--ink-2)}
 </section>
 
 <section style="border-bottom:0">
-  <h2><span class="num">07 / 缺口</span>两轮研究连续没答上的</h2>
+  <h2><span class="num">08 / 缺口</span>两轮研究连续没答上的</h2>
   <div class="scroll"><table>
     <thead><tr><th>缺口</th><th>状态</th></tr></thead>
     <tbody>

@@ -3,17 +3,17 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "L0 · 看懂 —— 对照 12 个破绽拉片，先长眼睛（不写代码、不生成）"
+current_phase: "L0 · 前期设定 —— 做角色 turnaround + 5-Aspect 分镜表（一帧都不生成）"
 current_bottleneck: "无阻塞。能力阶梯已定版（docs/notes/04-capability-ladder.md），L0 可直接开工"
-monitoring_summary: "2026-08-20 第二轮 deep-research 收口（107 agent / 验 25 条 / 确认 10 否 14）。最大发现是否定结论：公开资料里不存在能力阶梯，7 条此类主张被 3 票否决。已自建 L0-L6 七级阶梯，地基为 VBench-2.0 的 superficial/intrinsic 之分。"
+monitoring_summary: "2026-08-20 补上 SOP 缺口：从 OpenMontage cinematic 流水线源文件逐字读出 8 阶段 + 5-Aspect 分镜规范 + 资产/合成硬规则，另加传统动画 character sheet 六件套与 turnaround 标准。L0 由「拉片测试」改为「前期设定」，12 破绽降级为贯穿全程的验收表。"
 
 phases:
   # 路径 v3：能力难度轴（作品驱动 P1-P4 已废——那是生产流程轴，混淆两轴 = 第一个弯路）
-  - id: "L0-see"
-    file: "docs/notes/04-capability-ladder.md#L0"
+  - id: "L0-preproduction"
+    file: "docs/notes/05-industrial-sop.md"
     range: "1"
     self_contained: true
-    status: "todo"            # 判据：能指出一条 AI 片 ≥5 个破绽并说出成因
+    status: "todo"            # 判据：交付角色 turnaround（5 视图+HEX色标）+ 5-Aspect 分镜表
     error_signals_unhandled: 0
   - id: "L1-one-shot"
     file: "docs/notes/04-capability-ladder.md#L1"
@@ -53,9 +53,12 @@ phases:
     error_signals_unhandled: 0
 
 notes: |
-  路径 v3（能力难度轴）：L0 看懂 → L1 单镜头 → L2 规避设计★ → L3 一致性 →
+  路径 v3（能力难度轴）：L0 前期设定 → L1 单镜头 → L2 规避设计★ → L3 一致性 →
   L4 管线 → L5 自动筛选 → L6 非视觉。v2 的作品驱动 P1-P4 已废——那是生产流程轴。
   构造原则（全文方法核心）：模型饱和的维度不学；模型崩溃的维度重点学，
   而且学的是「怎么绕开」不是「怎么写更好的 prompt」。
+  两份正文：04 能力阶梯（学什么/怎么算过关）+ 05 工业级 SOP（具体怎么做）。
   可打勾版：docs/notes/ladder.html（也已发布为 artifact）
+  L0 修正记录：原 L0「拉片找 12 破绽」是测试不是方法，已改为「前期设定」；
+  12 破绽降级为 L1 起每级都过的验收 QC 门（工业界 QC gate 本就贯穿全程）。
   台账纪律不变：每条生成记「选没选中」——那一列是 L5 的训练数据。
