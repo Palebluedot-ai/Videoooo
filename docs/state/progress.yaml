@@ -1,0 +1,21 @@
+# instantiated-from kit/progress-template.yaml @ v0.18.0
+# 单一控制点（只有 orchestrator 主会话写；子代理与人类只读）
+version: 1
+project: "Videoooo — AI video 学习仓"
+
+current_phase: "S0.1 · 环境就绪 + 跑通第一条 AI video 链路，并留下第一篇实证笔记"
+current_bottleneck: "未定第一条主线工具（Runway / Veo / Sora / Replicate 上的开源模型 / ComfyUI 本地跑）——待用户拍板，见 docs/requirements.md 待拍板区"
+monitoring_summary: "2026-08-19 骨架初始化：M 档，Explore 主车道，规划链跳过（登记为 local_deviation）。尚无实验产出。"
+
+phases:
+  - id: "s0.1-first-pipeline"
+    file: "docs/phases/phase-s0.1-first-pipeline.md"
+    range: "1-1"
+    self_contained: true
+    status: "todo"          # todo | in_progress | done | blocked
+    error_signals_unhandled: 0
+
+notes: |
+  下一步：用户拍板第一条主线工具（requirements.md 待拍板区 Q1），拍完即可开 s0.1。
+  学习仓约定：一张 phase 卡 = 一个学习里程碑，不是一个功能切片。
+  笔记真实性红线（AGENTS §1）是本项目最高优先级——凭记忆写笔记 = 事故。

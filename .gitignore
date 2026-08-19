@@ -1,0 +1,41 @@
+# 密钥（硬红线：绝不入库）
+.env
+.env.*
+!.env.example
+*.key
+credentials.json
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.uv/
+.ipynb_checkpoints/
+
+# 大文件：生成的视频/音频/图片/模型权重不入 git
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.avi
+*.gif
+*.wav
+*.mp3
+*.m4a
+*.safetensors
+*.ckpt
+*.pt
+*.bin
+out/
+outputs/
+renders/
+assets/raw/
+
+# 例外：留作证据的小截图放这里（≤200KB，手动 git add -f 也可）
+!docs/notes/**/*.png
+!docs/notes/**/*.jpg
+
+# macOS / 编辑器
+.DS_Store
+.idea/
+.vscode/
