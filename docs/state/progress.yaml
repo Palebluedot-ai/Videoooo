@@ -4,8 +4,8 @@ version: 1
 project: "Videoooo — AI video 学习仓"
 
 current_phase: "S0.1 · 环境就绪 + 跑通第一条 AI video 链路，并留下第一篇实证笔记"
-current_bottleneck: "未定第一条主线工具（Runway / Veo / Sora / Replicate 上的开源模型 / ComfyUI 本地跑）——待用户拍板，见 docs/requirements.md 待拍板区"
-monitoring_summary: "2026-08-19 骨架初始化：M 档，Explore 主车道，规划链跳过（登记为 local_deviation）。尚无实验产出。"
+current_bottleneck: "待 Chao 拍板 Q1 路线（调研已给出证据与建议：默认推荐 A 云 API 直调，见 docs/notes/01-learning-path.md §二）"
+monitoring_summary: "2026-08-19 骨架初始化 + 首轮 deep-research（105 agent / 验 25 条 / 确认 14 否 11）。产出 docs/notes/00-landscape.md（调研发现）与 01-learning-path.md（综合建议）。尚无代码实验产出。"
 
 phases:
   - id: "s0.1-first-pipeline"
@@ -16,6 +16,9 @@ phases:
     error_signals_unhandled: 0
 
 notes: |
-  下一步：用户拍板第一条主线工具（requirements.md 待拍板区 Q1），拍完即可开 s0.1。
+  下一步：用户拍板 Q1 路线（A 云 API 直调 / B FLORA+MCP / C 本地 ComfyUI），拍完即可开 s0.1。
+  调研已答掉 Q1 的证据面（00-landscape 第三、四、五节），但选择权在用户。
+  调研留下 4 个待查题（00-landscape 第九节），其中「一次抽卡多少钱」是最大空洞——
+  本轮 4 条价格声称被对抗验证否掉 3 条，笔记里禁止出现未经核实的单价换算。
   学习仓约定：一张 phase 卡 = 一个学习里程碑，不是一个功能切片。
   笔记真实性红线（AGENTS §1）是本项目最高优先级——凭记忆写笔记 = 事故。

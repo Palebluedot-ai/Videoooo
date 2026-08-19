@@ -12,6 +12,12 @@
 
 <!-- 随手写在这条线下面。想到就写,不用管格式、不用管重复。整理后这里会被 AI 清空(整理结果进下面「已整理」)。 -->
 
+- 2026-08-19「对话捕获」想体系化学 AI 视频、不走弯路。类比编程的 prompt engineering / harness / context engineering / graph engineering —— AI 视频也「抽卡」，也该有工作流方法论。
+- 2026-08-19「对话捕获」待考察的工作流类产品：Flora（florafauna.ai 节点画布）、TapNow、Musein（musein.ai）、LibTV。对比对象：ComfyUI / Freepik / Krea / Higgsfield。
+- 2026-08-19「对话捕获」悬而未决的疑问：AI 视频流程里 Claude / Cursor 到底有没有用武之地？（直觉是「写管线/批处理/筛选脚本」有用，「出片审美」没用——待调研证实）
+- 2026-08-19「对话捕获」想找 GitHub 上高 star 的复刻类 skill / 工作流合集直接拿来用。
+- 2026-08-19 已就此发起 deep-research 调研，结论回来后应能直接答掉 requirements 待拍板区 Q1/Q2/Q4。
+
 
 
 ---
