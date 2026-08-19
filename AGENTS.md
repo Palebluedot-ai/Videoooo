@@ -18,6 +18,7 @@
 | **密钥红线** | 视频/图像生成 API key（Runway / Pika / Veo / Sora / Replicate / fal 等）只进 gitignored `.env`；**禁入**笔记正文、commit、日志、截图。代码一律 `os.environ[...]` 读，不硬编码 |
 | **大文件红线** | 生成的视频/音频/模型权重/数据集**不入 git**。`.gitignore` 已挡 `*.mp4/mov/webm/png` 等；确要留证据就留缩略图或首帧截图（≤200KB）并解释 |
 | **Python 包管理** | 一律 `uv`（`uv venv` / `uv pip install` / `uv run`）。**禁止 pip / pip3 install**（用户全局铁律） |
+| **公开仓意识** | 本仓是 **public**（github.com/Palebluedot-ai/Videoooo）。写进任何文件的内容默认全世界可见：密钥/账号残迹、可识别个人信息、他人未公开素材 **一律不许落盘**；实验截图入库前先看一眼有没有带 key 的终端行或私人路径。花费金额可写（对读者有价值），账号标识不可写 |
 | **不写死暂停项** | 见下表；未获明确指令前不实现、不假设 |
 | 外向操作 | push / 建远程资源 / 调**付费** API，首次须用户确认。假定一切 CLI 在非交互环境自动确认 |
 | **runtime ≠ product surface** | 本项目 runtime 与交付面重合（都在本机）；若将来某个实验需要云跑（GPU/长渲染），那是 runtime 变化，**不等于**项目要产品化——不得据此自动升级成部署项目 |
