@@ -3,40 +3,59 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "P1 · 复刻《丧尸清道夫》一个镜头，先拿手感（不写代码）"
-current_bottleneck: "无阻塞——Q1–Q4 已全部拍板（2026-08-19），P1 可直接开工"
-monitoring_summary: "2026-08-19 两轮调研收口：deep-research 摸版图 + 定向调研拿到《丧尸清道夫》五段式方法论。路径重写为作品驱动 P1-P4。本机实测 M5 Max/128GB/40核GPU。"
+current_phase: "L0 · 看懂 —— 对照 12 个破绽拉片，先长眼睛（不写代码、不生成）"
+current_bottleneck: "无阻塞。能力阶梯已定版（docs/notes/04-capability-ladder.md），L0 可直接开工"
+monitoring_summary: "2026-08-20 第二轮 deep-research 收口（107 agent / 验 25 条 / 确认 10 否 14）。最大发现是否定结论：公开资料里不存在能力阶梯，7 条此类主张被 3 票否决。已自建 L0-L6 七级阶梯，地基为 VBench-2.0 的 superficial/intrinsic 之分。"
 
 phases:
-  - id: "p1-replicate-one-shot"
-    file: "docs/phases/phase-p1-replicate-one-shot.md"
-    range: "1-2"
+  # 路径 v3：能力难度轴（作品驱动 P1-P4 已废——那是生产流程轴，混淆两轴 = 第一个弯路）
+  - id: "L0-see"
+    file: "docs/notes/04-capability-ladder.md#L0"
+    range: "1"
+    self_contained: true
+    status: "todo"            # 判据：能指出一条 AI 片 ≥5 个破绽并说出成因
+    error_signals_unhandled: 0
+  - id: "L1-one-shot"
+    file: "docs/notes/04-capability-ladder.md#L1"
+    range: "2"
+    self_contained: true
+    status: "todo"            # 判据：一条 5-10 秒片段，12 破绽 0 命中
+    error_signals_unhandled: 0
+  - id: "L2-design-around"
+    file: "docs/notes/04-capability-ladder.md#L2"
+    range: "3"
+    self_contained: true
+    status: "todo"            # ★分水岭 判据：任一崩溃维度能给 ≥2 种绕开方案
+    error_signals_unhandled: 0
+  - id: "L3-consistency"
+    file: "docs/notes/04-capability-ladder.md#L3"
+    range: "4"
     self_contained: true
     status: "todo"
     error_signals_unhandled: 0
-  # 以下三卡待 P1 收工后再写细（agent-on：卡在要做时才写，不预先摊开）
-  - id: "p2-pipeline"
-    file: "docs/phases/（待写）"
-    range: "3-5"
-    self_contained: false
-    status: "todo"            # 上代码：Seedance API 批量管线 + 轮询重试 + 台账
+  - id: "L4-pipeline"
+    file: "docs/notes/04-capability-ladder.md#L4"
+    range: "5"
+    self_contained: true
+    status: "todo"            # Claude Code 主场
     error_signals_unhandled: 0
-  - id: "p3-first-film"
-    file: "docs/phases/（待写）"
-    range: "6-25"
-    self_contained: false
-    status: "todo"            # 主线：60-90 秒完整短片，≥20 镜头
+  - id: "L5-auto-curation"
+    file: "docs/notes/04-capability-ladder.md#L5"
+    range: "6"
+    self_contained: true
+    status: "todo"            # 全网空白，最值钱的自研点
     error_signals_unhandled: 0
-  - id: "p4-controllability"
-    file: "docs/phases/（待写）"
-    range: "26-"
+  - id: "L6-non-visual"
+    file: "docs/notes/04-capability-ladder.md#L6"
+    range: "7"
     self_contained: false
-    status: "todo"            # 本地 ComfyUI + Wan + comfy-mcp，仅当出现具体可控性需求才开
+    status: "todo"            # 学术界无可测量分解，回传统影视教材
     error_signals_unhandled: 0
 
 notes: |
-  路径 v2（作品驱动）：P1 复刻一镜 → P2 上代码管线 → P3 完整短片 → P4 可控性攻坚。
-  核心判断：Seedance 出片（音画同步是本地给不了的硬能力），本地 128GB 是 P4 的可控性
-  实验场，不是出片主力——别让装环境吃掉做片子的头两周。
-  最重要的一条：《丧尸清道夫》是中专生 10 天 3000 块做的，瓶颈是方法不是算力预算。
-  台账纪律：每条生成记「选没选中」——攒够了能训练自动筛选，而这正是全网空白。
+  路径 v3（能力难度轴）：L0 看懂 → L1 单镜头 → L2 规避设计★ → L3 一致性 →
+  L4 管线 → L5 自动筛选 → L6 非视觉。v2 的作品驱动 P1-P4 已废——那是生产流程轴。
+  构造原则（全文方法核心）：模型饱和的维度不学；模型崩溃的维度重点学，
+  而且学的是「怎么绕开」不是「怎么写更好的 prompt」。
+  可打勾版：docs/notes/ladder.html（也已发布为 artifact）
+  台账纪律不变：每条生成记「选没选中」——那一列是 L5 的训练数据。

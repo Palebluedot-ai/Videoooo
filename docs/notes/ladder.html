@@ -1,0 +1,533 @@
+<title>AI 视频能力阶梯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;600;700&display=swap">
+
+<style>
+:root{
+  --ground:#F1F1EF; --surface:#FFFFFF; --surface-2:#F7F7F5;
+  --ink:#191C1E; --ink-2:#4A5054; --ink-3:#787E83;
+  --line:#DEDEDA; --line-2:#C9C9C4;
+  --accent:#1B5C58; --accent-soft:#E2EDEC;
+  --ok:#2B6E4F; --ok-soft:#E1EEE7;
+  --warn:#9C6714; --warn-soft:#F5EBDA;
+  --crit:#9E362F; --crit-soft:#F6E3E1;
+  --shadow:0 1px 2px rgba(20,24,26,.05),0 8px 24px -12px rgba(20,24,26,.14);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --cond:"IBM Plex Sans Condensed",-apple-system,sans-serif;
+  --cjk:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#131617; --surface:#1B1F21; --surface-2:#22272A;
+    --ink:#E9EAEA; --ink-2:#A8AFB3; --ink-3:#7C8388;
+    --line:#2C3235; --line-2:#3C4347;
+    --accent:#63BDB4; --accent-soft:#1D2E2D;
+    --ok:#5BA87E; --ok-soft:#1A2A22;
+    --warn:#CFA149; --warn-soft:#2B2419;
+    --crit:#CF7168; --crit-soft:#2C1D1B;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131617; --surface:#1B1F21; --surface-2:#22272A;
+  --ink:#E9EAEA; --ink-2:#A8AFB3; --ink-3:#7C8388;
+  --line:#2C3235; --line-2:#3C4347;
+  --accent:#63BDB4; --accent-soft:#1D2E2D;
+  --ok:#5BA87E; --ok-soft:#1A2A22;
+  --warn:#CFA149; --warn-soft:#2B2419;
+  --crit:#CF7168; --crit-soft:#2C1D1B;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:var(--cjk); font-size:16px; line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  padding:0 20px 100px;
+}
+.wrap{max-width:940px;margin:0 auto}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ── masthead ── */
+header{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:18px
+}
+h1{
+  font-family:var(--cjk);font-size:clamp(30px,5vw,46px);line-height:1.18;
+  font-weight:700;letter-spacing:-.015em;text-wrap:balance;margin-bottom:18px
+}
+.standfirst{font-size:17px;color:var(--ink-2);max-width:60ch;text-wrap:pretty}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3)
+}
+.meta span{
+  border:1px solid var(--line-2);border-radius:2px;padding:4px 9px;
+  font-variant-numeric:tabular-nums
+}
+
+/* ── the finding ── */
+.verdict{
+  margin:44px 0;padding:26px 28px;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--crit);
+  border-radius:3px;box-shadow:var(--shadow)
+}
+.verdict .lbl{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--crit);font-weight:600;margin-bottom:10px
+}
+.verdict p{font-size:19px;line-height:1.6;font-weight:600;letter-spacing:-.01em}
+.verdict .sub{font-size:15px;font-weight:400;color:var(--ink-2);margin-top:12px}
+
+/* ── sections ── */
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+h2{
+  font-family:var(--cjk);font-size:26px;font-weight:700;letter-spacing:-.012em;
+  margin-bottom:8px;text-wrap:balance
+}
+h2 .num{
+  font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent);
+  letter-spacing:.1em;display:block;margin-bottom:8px
+}
+.lede{color:var(--ink-2);max-width:62ch;margin-bottom:28px;text-wrap:pretty}
+
+/* ── step wedge ── */
+.wedge{display:flex;flex-direction:column;gap:2px;margin:8px 0 22px}
+.step{
+  display:grid;grid-template-columns:minmax(150px,1.1fr) 1fr 64px;
+  align-items:center;gap:14px;padding:11px 14px;background:var(--surface);
+  border:1px solid var(--line);border-radius:2px
+}
+.step .name{font-size:14.5px;font-weight:600}
+.step .name em{display:block;font-style:normal;font-weight:400;font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.bar{height:9px;background:var(--surface-2);border-radius:1px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%}
+.step .pct{
+  font-family:var(--mono);font-size:14px;font-weight:600;text-align:right;
+  font-variant-numeric:tabular-nums
+}
+.s-ok  .bar i{background:var(--ok)}    .s-ok  .pct{color:var(--ok)}
+.s-mid .bar i{background:var(--warn)}  .s-mid .pct{color:var(--warn)}
+.s-bad .bar i{background:var(--crit)}  .s-bad .pct{color:var(--crit)}
+.s-ok{border-left:3px solid var(--ok)} .s-mid{border-left:3px solid var(--warn)} .s-bad{border-left:3px solid var(--crit)}
+
+.readout{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px
+}
+.readout div{padding:16px 18px;border-radius:3px;font-size:14.5px;line-height:1.6}
+.readout .g{background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 26%,transparent)}
+.readout .r{background:var(--crit-soft);border:1px solid color-mix(in srgb,var(--crit) 26%,transparent)}
+.readout b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:7px}
+.readout .g b{color:var(--ok)} .readout .r b{color:var(--crit)}
+
+/* ── ladder ── */
+.rungs{display:flex;flex-direction:column;gap:16px}
+.rung{
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  box-shadow:var(--shadow);overflow:hidden;transition:border-color .18s
+}
+.rung.done{border-color:color-mix(in srgb,var(--ok) 46%,var(--line))}
+.rung-head{
+  display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:14px;
+  padding:16px 20px;cursor:pointer;background:none;border:0;width:100%;
+  text-align:left;font-family:inherit;color:inherit
+}
+.rung-head:hover{background:var(--surface-2)}
+.tick{
+  width:22px;height:22px;border:1.5px solid var(--line-2);border-radius:3px;
+  display:grid;place-items:center;flex:none;transition:.18s;background:var(--surface)
+}
+.tick svg{width:13px;height:13px;stroke:var(--surface);stroke-width:2.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:.18s}
+.done .tick{background:var(--ok);border-color:var(--ok)}
+.done .tick svg{opacity:1}
+.lv{
+  font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);padding:3px 8px;border-radius:2px;letter-spacing:.04em
+}
+.rung-title{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.rung-title small{
+  display:block;font-size:12.5px;font-weight:400;color:var(--ink-3);
+  letter-spacing:0;margin-top:2px
+}
+.chev{width:16px;height:16px;stroke:var(--ink-3);stroke-width:2;fill:none;
+  transition:transform .2s;flex:none}
+.rung[open] .chev{transform:rotate(180deg)}
+.rung-body{padding:4px 20px 22px;border-top:1px solid var(--line)}
+.field{
+  display:grid;grid-template-columns:76px 1fr;gap:14px;padding:13px 0;
+  border-bottom:1px dashed var(--line);align-items:start
+}
+.field:last-child{border-bottom:0}
+.field dt{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);padding-top:4px
+}
+.field dd{font-size:15px;line-height:1.68}
+.field.hi dd{font-weight:600}
+.field.hi dt{color:var(--accent)}
+
+/* ── epistemic tags ── */
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;
+  vertical-align:2px;margin-right:6px;white-space:nowrap
+}
+.t-ev{background:var(--ok-soft);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 32%,transparent)}
+.t-inf{background:var(--warn-soft);color:var(--warn);border:1px dashed color-mix(in srgb,var(--warn) 46%,transparent)}
+.t-no{background:var(--crit-soft);color:var(--crit);border:1px solid color-mix(in srgb,var(--crit) 32%,transparent)}
+
+.note{
+  margin-top:12px;padding:12px 15px;border-radius:2px;font-size:13.5px;line-height:1.62;
+  background:var(--warn-soft);border:1px dashed color-mix(in srgb,var(--warn) 40%,transparent);
+  color:var(--ink-2)
+}
+.note.crit{background:var(--crit-soft);border-color:color-mix(in srgb,var(--crit) 40%,transparent);border-style:solid}
+
+/* ── tables ── */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0;
+  border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;background:var(--surface-2);white-space:nowrap
+}
+tbody tr:last-child td{border-bottom:0}
+td .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px}
+
+/* ── tells ── */
+.tells{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:10px;margin-top:8px}
+.tell{
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  padding:13px 15px;font-size:14px;line-height:1.58
+}
+.tell b{display:block;font-weight:600;margin-bottom:4px}
+.tell .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-right:6px}
+.tell span{color:var(--ink-2);font-size:13px}
+.tell.i{border-left:3px solid var(--crit)}
+.tell.s{border-left:3px solid var(--warn)}
+
+/* ── tools ── */
+.tool{
+  display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;
+  padding:15px 0;border-bottom:1px solid var(--line)
+}
+.tool:last-child{border-bottom:0}
+.tool .nm{font-family:var(--mono);font-size:14.5px;font-weight:600}
+.tool .ds{font-size:13.5px;color:var(--ink-2);margin-top:5px;line-height:1.6}
+.stars{
+  font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap;
+  font-variant-numeric:tabular-nums
+}
+.live{color:var(--ok)} .stale{color:var(--crit)} .warnc{color:var(--warn)}
+
+footer{padding:44px 0 0;font-size:13.5px;color:var(--ink-3);line-height:1.7}
+footer b{color:var(--ink-2)}
+.prog{
+  position:sticky;top:0;z-index:9;background:var(--ground);
+  padding:12px 0;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:12px;color:var(--ink-3)
+}
+.prog .track{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.prog .track i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:620px){
+  .step{grid-template-columns:1fr 56px;gap:8px}
+  .step .bar{grid-column:1/-1}
+  .field{grid-template-columns:1fr;gap:4px}
+  .rung-head{grid-template-columns:auto auto 1fr;row-gap:8px}
+  .chev{display:none}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Videoooo · 学习文档 01</div>
+  <h1>AI 视频能力阶梯</h1>
+  <p class="standfirst">一份可以一级一级打勾的学习路径。地基是三块经过对抗验证的学术证据，阶梯本身是构造的——每一处的证据等级都标出来了，你可以推翻任何一级。</p>
+  <div class="meta">
+    <span>2026-08-20</span>
+    <span>2 轮 deep-research</span>
+    <span>212 agents</span>
+    <span>验 50 条 · 确认 24 · 否 25</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <div class="lbl">本轮最重要的结果是一个否定结论</div>
+  <p>你要的那种「能力阶梯」，公开资料里不存在。</p>
+  <p class="sub">证据不是「没搜到」，而是这类主张被<b>系统性否决</b>——被 3 票否掉的 14 条里有 7 条恰好全是「某机构课程发布了能力判据 / 硬门禁 / 能力分解」这一类（Comfy Compositing 三层门禁 0-3、Curious Refuge 九阶段 0-3、NYU Tisch 三能力域 0-3、Full Sail 三模块 0-3×3……）。唯一被逐字核实的机构大纲是<b>生产流程顺序</b>，零能力判据、零关卡考核、零卡点数据。<br><br>所以下面这份阶梯是我构造的。</p>
+</div>
+
+<section>
+  <h2><span class="num">01 / 先分清两条轴</span>混淆这两条 = 第一个弯路</h2>
+  <div class="scroll"><table>
+    <thead><tr><th></th><th>生产流程轴</th><th>能力难度轴</th></tr></thead>
+    <tbody>
+      <tr><td><b>回答什么</b></td><td>做一部片<b>按什么顺序做</b></td><td><b>先练什么后练什么</b></td></tr>
+      <tr><td><b>公开资料</b></td><td><span class="tag t-ev">有</span>Studio Arts 七阶段（8 周 $1,000）</td><td><span class="tag t-no">不存在</span></td></tr>
+      <tr><td><b>长什么样</b></td><td>概念脚本 → 视觉开发 → hero frames → 图生视频 → 画质增强 → 声音配乐 → 终混交付</td><td>本页第 03 节</td></tr>
+    </tbody>
+  </table></div>
+  <p class="lede" style="margin:0">按生产流程学，你第一天就要同时面对分镜、生成、调色、混音——每一样都不会，每一样都在拖后腿。按能力难度学，一次只练一件事。</p>
+</section>
+
+<section>
+  <h2><span class="num">02 / 地基</span>决定学习顺序的那条线</h2>
+  <p class="lede"><span class="tag t-ev">已验证 3-0</span>VBench-2.0 区分 <b>superficial faithfulness</b>（逐帧美感、时序一致、基本 prompt 遵循——论文原话「approaching saturation」）与 <b>intrinsic faithfulness</b>（物理律、常识、解剖、构图完整）。关键是：intrinsic 不是全面失败，是<b>特定维度崩溃</b>。</p>
+
+  <div class="wedge">
+    <div class="step s-ok"><div class="name">Commonsense / Instance Preservation<em>常识 · 物体保持</em></div><div class="bar"><i style="width:93%"></i></div><div class="pct">92–94%</div></div>
+    <div class="step s-ok"><div class="name">Human Anatomy<em>人体解剖</em></div><div class="bar"><i style="width:87%"></i></div><div class="pct">86–88%</div></div>
+    <div class="step s-bad"><div class="name">Dynamic Spatial Relationship<em>动态空间关系（走位、相对位置变化）</em></div><div class="bar"><i style="width:20%"></i></div><div class="pct">19–21%</div></div>
+    <div class="step s-mid"><div class="name">Dynamic Attribute Change<em>动态属性变化（边走边变色、逐渐融化）</em></div><div class="bar"><i style="width:16%"></i></div><div class="pct">8–24%</div></div>
+    <div class="step s-bad"><div class="name">Complex Plot<em>复杂情节</em></div><div class="bar"><i style="width:10%"></i></div><div class="pct">9–11%</div></div>
+  </div>
+
+  <div class="note crit"><b>vintage 警告</b>：这批数字来自 VBench-2.0 Table II，对应 <b>2025-03</b> 那批模型（Sora / Kling / HunyuanVideo / CogVideoX）。<b>不可当作当前值</b>——当前榜单接口返回 401，取不到。用它判断「哪类维度难」，不要用它判断「今天某个模型多少分」。</div>
+
+  <div class="readout">
+    <div class="g"><b>模型已饱和</b>逐帧美感、时序一致、基本 prompt 遵循、常识、物体保持——<b>不是你的学习内容</b>，别花时间。</div>
+    <div class="r"><b>模型崩溃</b>动态空间关系、复杂情节、动态属性变化——<b>这才是你的手艺所在</b>，而且必须靠「改设计绕开」，不是靠「把 prompt 写得更好」。</div>
+  </div>
+
+  <p class="lede" style="margin:28px 0 10px"><b>这就是构造阶梯的原则</b>，也是全文的方法核心。</p>
+</section>
+
+<section>
+  <h2><span class="num">03 / 阶梯</span>七级，逐级打勾</h2>
+  <p class="lede"><span class="tag t-inf">我构造的</span>地基是上一节的证据，编排是我的推论。点开每一级看判据、练习、卡点。勾选状态存在你自己的浏览器里。</p>
+
+  <div class="prog">
+    <span>进度</span><div class="track"><i id="pbar"></i></div><span id="pnum">0 / 7</span>
+  </div>
+
+  <div class="rungs" style="margin-top:18px">
+
+    <details class="rung" data-k="L0"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L0</span>
+      <span class="rung-title">看懂<small>先长眼睛 · 3–5 小时</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>判据</dt><dd>给你一条 AI 片，能指出 <b>≥5 个</b>破绽并说出成因（对照第 04 节的 12 个破绽）</dd></div>
+      <div class="field"><dt>练习</dt><dd>找 3 条 AI 短片 + 1 条专业实拍片，<b>逐条对照 12 tells 打分</b>，做成表格</dd></div>
+      <div class="field"><dt>工具</dt><dd>LibTV 的「逐帧拉片」把影视学院的拉片训练法产品化了；或任何播放器逐帧看</dd></div>
+      <div class="field"><dt>卡点</dt><dd>觉得「都挺好啊」——说明还没过关。看不出破绽，后面每一级的自检都是假的，所以这一级在最底层</dd></div>
+    </dl></div></details>
+
+    <details class="rung" data-k="L1"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L1</span>
+      <span class="rung-title">单镜头出片<small>手感 · 1–2 天</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>判据</dt><dd>一条 5–10 秒片段，<b>12 个破绽里 0 命中</b></dd></div>
+      <div class="field"><dt>练习</dt><dd>同一条 prompt 抽 <b>10 次</b>，逐条标注命中了哪几个破绽，做成表</dd></div>
+      <div class="field"><dt>工具</dt><dd>Seedance（BytePlus / 即梦 / LibTV，¥0.4 秒起）· 五段式提示词 · <span class="mono">/shortfilm-prompt</span> skill</dd></div>
+      <div class="field"><dt>卡点</dt><dd>以为是 prompt 写得不好——<b>其实是选题落在了模型崩溃维度</b>。想要「主角边走边变色」= dynamic attribute change，模型级得分 8–24%，换谁写都一样</dd></div>
+    </dl></div></details>
+
+    <details class="rung" data-k="L2"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L2</span>
+      <span class="rung-title">规避设计 ★<small>分水岭 · 半天想清楚，之后一直用</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>判据</dt><dd>给定任一模型崩溃维度，能提出 <b>≥2 种</b>在美术或叙事上绕开它的方案</dd></div>
+      <div class="field"><dt>练习</dt><dd>写一份<b>约束清单</b>：你想做的题材里哪些元素会踩崩溃维度？每条给一个绕法。<br>例：「两人对话走位」→ 动态空间关系仅 19–21% → 绕法 a) 改成静止对峙 b) 改成单人 + 画外音</dd></div>
+      <div class="field"><dt>工具</dt><dd>纸笔。<b>这一级没有工具能替你做</b></dd></div>
+      <div class="field"><dt>卡点</dt><dd>习惯性想「再调调 prompt」。崩溃维度不是 prompt 能救的</dd></div>
+      <div class="field"><dt>示例</dt><dd>《丧尸清道夫》把主角设计成「机器人 + 像素表情屏」，不是美术偏好，是<b>在模型崩溃维度上改需求</b>。它是这一级的一个示例，不是这一级本身</dd></div>
+    </dl></div></details>
+
+    <details class="rung" data-k="L3"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L3</span>
+      <span class="rung-title">一致性工程<small>3–5 天</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>判据</dt><dd>3+ 个镜头里同一角色 / 场景，<b>人眼一眼认得出是同一个</b></dd></div>
+      <div class="field"><dt>练习</dt><dd>做一个 3 镜头连续片段，对比「只靠文字描述」vs「参考图条件化」的一致性差距</dd></div>
+      <div class="field"><dt>工具</dt><dd>参考图条件化（ingredients）· 每条 prompt <b>逐字重复</b>角色描述 · 角色资产库</dd></div>
+      <div class="field"><dt>卡点</dt><dd>参考图质量不够。<b>「图片质量不高就别喂参考图」</b>——AI 会模仿画风而不是模仿设计</dd></div>
+    </dl>
+    <div class="note"><span class="tag t-inf">我的类比</span>context engineering ↔ 资产工程这一轴，两轮研究<b>零存活证据</b>。唯一的机构级线索因验证器报错，既未证实也未证伪。</div>
+    </div></details>
+
+    <details class="rung" data-k="L4"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L4</span>
+      <span class="rung-title">管线与批量<small>Claude Code 主场 · 3–5 天</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>判据</dt><dd>一条命令从 <span class="mono">shots.yaml</span> 跑到粗剪成片；某镜头失败能断点续跑</dd></div>
+      <div class="field"><dt>练习</dt><dd>批量出 20 条 + 每条自动落台账：prompt / 模型 / 参数 / seed / 抽第几次 / 花费 / <b>选没选中</b></dd></div>
+      <div class="field"><dt>工具</dt><dd>OpenMontage（48.9k★）· ViMax（12k★）· comfy-mcp · 自己写</dd></div>
+      <div class="field"><dt>卡点</dt><dd>照记忆写 SDK 调用。<b>先 <span class="mono">print(resp)</span> dump 真实响应再写解析</b>——各家 API 半年一变</dd></div>
+    </dl>
+    <div class="note"><span class="tag t-inf">我的类比</span>harness 这一轴同样零存活证据——但 OpenMontage / ViMax 的存在是工程事实，已逐个核验。</div>
+    </div></details>
+
+    <details class="rung" data-k="L5"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L5</span>
+      <span class="rung-title">自动筛选<small>全网空白 · 最值钱的自研点</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>判据</dt><dd>机器排出的 top 3 里，<b>≥1 条</b>是你人眼也会选的</dd></div>
+      <div class="field"><dt>练习</dt><dd>拿 L4 攒的台账——尤其「选没选中」那一列——训一个筛选器</dd></div>
+      <div class="field"><dt>工具</dt><dd>VBench（1.7k★ Apache-2.0）· VLM-as-judge 自己搭</dd></div>
+      <div class="field"><dt>方向</dt><dd>可引的替代路线：NeuS-V（把 prompt 转成时序逻辑规范做形式化验证，<b>与人类评估相关性高出既有启发式 5 倍以上</b>）· FiVE-Acc（VLM 做 Yes/No 语义询问）· Video-Bench 的 Chain-of-Query</dd></div>
+    </dl>
+    <div class="note crit"><b>这一级最容易踩的坑</b>：<b>模型级 eval ≠ 镜头级筛选</b>。VBench-2.0 / AesRM 是给<b>生成器排名</b>的基准，拿来「筛我今天抽的 20 条」是超出设计意图的外推。而 <b>FVD / CLIPScore 当筛选器在方法论上根本不成立</b>——FVD 是分布级指标，对单条视频<b>没有定义</b>（属范畴不适用，不是「不准」）。<br>已被坐实的只有<b>训练闭环</b>（AesRM 用于对齐 Wan2.2-TI2V-5B 这个消费级小模型），「评估→选片」那一半<b>没有被证明</b>。</div>
+    </div></details>
+
+    <details class="rung" data-k="L6"><summary class="rung-head">
+      <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+      <span class="lv">L6</span>
+      <span class="rung-title">非视觉维度<small>学术界还没给出可测量分解</small></span>
+      <svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg>
+    </summary><div class="rung-body"><dl>
+      <div class="field hi"><dt>范围</dt><dd>剪辑节奏 · 色彩管理 / LUT · 声音设计 / 拟音 / 混音 · 叙事结构 · 表演</dd></div>
+      <div class="field"><dt>状态</dt><dd>两套学术 rubric（AesRM 15 细则、VBench-2.0 18 子能力）<b>完全不覆盖</b>这些，本轮零结论</dd></div>
+      <div class="field"><dt>怎么办</dt><dd><b>回传统影视教材。</b>AI 没有改变这一半的学习方式</dd></div>
+      <div class="field"><dt>入口</dt><dd>12 个破绽里的 #3 #4（打光、调色）与 #6 #11 #12（声音）就是这一级的入口检查表</dd></div>
+    </dl></div></details>
+
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">04 / 检查表</span>「一眼假」的 12 个破绽</h2>
+  <p class="lede">学术表述是 superficial / intrinsic 之分，实操版是这 12 条。<span class="tag t-no">红边</span>落在 intrinsic 一侧（物理 / 解剖，模型崩溃）<span class="tag t-inf" style="margin-left:6px">黄边</span>落在 superficial 一侧（后期可修）。两套框架对得上，互为印证。</p>
+  <div class="tells">
+    <div class="tell i"><b><span class="n">01</span>手部变形</b><span>暂停数手指——4 根 / 6 根 / 帧间变化。绕：选不露手的镜头，或构图让手出画</span></div>
+    <div class="tell i"><b><span class="n">02</span>切镜后背景物理不一致</b><span>云位置、阴影、光向在两镜间是否守恒。绕：人工控制多镜背景</span></div>
+    <div class="tell s"><b><span class="n">03</span>平板恐怖谷打光</b><span>各环境都是「晴朗午后」扩散光、无硬阴影。修：显式给光位与硬阴影</span></div>
+    <div class="tell s"><b><span class="n">04</span>过饱和合成色</b><span>草太绿、肤色偏橙、天空均匀饱和无渐变。修：后期压到真实传感器水平</span></div>
+    <div class="tell s"><b><span class="n">05</span>运动过于顺滑</b><span>像飞行模拟器一样线性稳定，缺真实微抖。修：加微抖 = 五段式的「呼吸感」行</span></div>
+    <div class="tell i"><b><span class="n">06</span>口型音画不同步</b><span>看 p / b / m 双唇音时嘴有没有闭合。修：调优的语音克隆</span></div>
+    <div class="tell i"><b><span class="n">07</span>镜面反射崩坏</b><span>反射物错位、角度错、直接消失。绕：画面里别放镜面</span></div>
+    <div class="tell i"><b><span class="n">08</span>画面内文字变乱码</b><span>路牌书封是否帧间一致可读。绕：场景里最小化文字</span></div>
+    <div class="tell i"><b><span class="n">09</span>背景群演单腿走路</b><span>步态是否真的左-右-左。绕：剔除背景密集的镜头</span></div>
+    <div class="tell s"><b><span class="n">10</span>纹理重复平铺</b><span>草地砖墙沙滩有无可见重复块。修：手动处理</span></div>
+    <div class="tell s"><b><span class="n">11</span>克隆声无呼吸</b><span>真人每 5–10 秒换气一次，AI 常不换。修：带韵律模型的 TTS</span></div>
+    <div class="tell s"><b><span class="n">12</span>TTS 平台调</b><span>有无重音起伏、列举加速、停顿。修：同上</span></div>
+  </div>
+  <div class="note">来源是 opus.pro 的行业 blog（非学术），但每条都与 VBench-2.0 的 superficial / intrinsic 划分对得上。</div>
+</section>
+
+<section>
+  <h2><span class="num">05 / 映射表</span>编程范式 ↔ AI 视频，诚实版</h2>
+  <p class="lede">10 条存活结论 <b>10/10 落在 eval 一轴</b>——这个分布本身就是证据。</p>
+  <div class="scroll"><table>
+    <thead><tr><th>编程范式</th><th>AI 视频对应物</th><th>证据等级</th></tr></thead>
+    <tbody>
+      <tr><td><b>eval</b></td><td><b>AIGVE</b><br><span style="font-size:13px;color:var(--ink-2)">AI-Generated Video Evaluation</span></td>
+        <td><span class="tag t-ev">已系统论述</span>有专名、三范式分类法、五条研究线、三个演进阶段，CVPR 2026 设 VGBE workshop</td></tr>
+      <tr><td>prompt engineering</td><td>视频提示词结构化（五段式等）</td><td><span class="tag t-inf">我的类比</span>零存活证据。社区实践大量存在，但达不到对抗验证门槛</td></tr>
+      <tr><td>context engineering</td><td>story bible / 角色库 / 风格锁 / 资产库</td><td><span class="tag t-inf">我的类比</span>零存活证据。唯一机构线索验证器报错</td></tr>
+      <tr><td>harness</td><td>工作流编排 / 批量管线</td><td><span class="tag t-inf">我的类比</span>零存活证据（但 OpenMontage / ViMax 是工程事实）</td></tr>
+      <tr><td>graph engineering</td><td>ComfyUI 节点图设计模式</td><td><span class="tag t-inf">我的类比</span>零存活证据</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>这张表是全文最诚实的产出。</b>「零存活证据」不等于那四轴不存在，等于<b>它们还没被人当成学科系统论述过</b>。换句话说——你在做的这件事（把 AI 视频当工程学）本身还没有教科书。</div>
+</section>
+
+<section>
+  <h2><span class="num">06 / 工具</span>全部当日 GitHub API 自核</h2>
+  <p class="lede">上一轮已经出过一个反面样本：某仓 994★ 但停更 5 个月，issue 区有人问「什么时候更新呢，现在太难用了啊」无人回。<b>star 数不能当维护活跃度用</b>，所以下面每条都标了最后提交日期。</p>
+
+  <div class="tool"><div><div class="nm">calesthio/OpenMontage</div><div class="ds">把 AI 编程助手变成完整视频制作工作室。2,104 文件 · <b>138 个 SKILL.md</b> · 12 条生产管线 · 同时带 <span class="mono">.claude</span> <span class="mono">.cursor</span> <span class="mono">.codex</span> · 38 位贡献者。两天前刚合并外部贡献的 Seedance 2.5 skill。<br><b style="color:var(--warn)">⚠ AGPL-3.0 是传染性 copyleft</b>，商用前看清楚</div></div>
+    <div class="stars live">48,916★<br><span style="font-weight:400;font-size:11.5px">08-18 活跃</span></div></div>
+
+  <div class="tool"><div><div class="nm">HKUDS/ViMax</div><div class="ds">Agentic 视频生成：Director / Screenwriter / Producer / Generator 一体。MIT</div></div>
+    <div class="stars live">12,032★<br><span style="font-weight:400;font-size:11.5px">07-29 活跃</span></div></div>
+
+  <div class="tool"><div><div class="nm">jnMetaCode/ai-shortfilm-prompts</div><div class="ds">五段式方法论 → Claude Code Skill，21 题材模板 + eval 测试。MIT</div></div>
+    <div class="stars live">359★<br><span style="font-weight:400;font-size:11.5px">08-18 活跃</span></div></div>
+
+  <div class="tool"><div><div class="nm">Vchitect/VBench</div><div class="ds">L5 用。CVPR2024 Highlight，Apache-2.0</div></div>
+    <div class="stars live">1,741★<br><span style="font-weight:400;font-size:11.5px">03-23 维护中</span></div></div>
+
+  <div class="tool"><div><div class="nm">zai-org/VisionReward</div><div class="ds">细粒度多维人类偏好，AAAI 2026 论文。Apache-2.0</div></div>
+    <div class="stars warnc">423★<br><span style="font-weight:400;font-size:11.5px">停更 17 个月</span></div></div>
+
+  <div class="tool"><div><div class="nm">OpenGVLab/PhyGenBench</div><div class="ds">ICML2025 物理常识基准。<b>无 License</b>，只当论文附件看</div></div>
+    <div class="stars stale">165★<br><span style="font-weight:400;font-size:11.5px">停更近 2 年</span></div></div>
+
+  <div class="tool"><div><div class="nm">AesVideo-Bench</div><div class="ds">AesRM 论文的配套基准——<b>未确认公开发布</b>，找不到 GitHub / HF 制品</div></div>
+    <div class="stars stale">不可用</div></div>
+</section>
+
+<section style="border-bottom:0">
+  <h2><span class="num">07 / 缺口</span>两轮研究连续没答上的</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>缺口</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><b>L6 非视觉维度的可测量分解</b><br><span style="font-size:13px;color:var(--ink-2)">剪辑节奏 / 色彩管理 / 声音设计 / 叙事结构</span></td><td>零结论。两套 rubric 都不覆盖 → 只能回传统影视教材</td></tr>
+      <tr><td><b>模型级 eval 怎么降维成镜头级筛选</b></td><td>只坐实训练闭环，选片闭环没证明。这正是 L5 的自研空间</td></tr>
+      <tr><td><b>context engineering 轴是否真有系统论述</b></td><td>唯一线索验证器报错，未证实也未证伪</td></tr>
+      <tr><td><b>四个工作流产品的完整定位与定价</b></td><td>两轮研究均零结论，已用一手页面实读补上，但<b>未经对抗验证</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note crit" style="margin-top:26px"><b>一条元教训</b>：上一轮「LibTV = LiblibAI 出品」被 <b>3 票全否</b>，但这一轮 <span class="mono">curl -sIL libtv.ai</span> 显示 <b>308 跳转到 www.liblib.tv</b>——归属属实。验证者否掉的是那条声称里的模型清单细节，<b>连带把正确的归属一起否了</b>。<br>→ 被否的结论不等于假，要看它<b>被否在哪一部分</b>。</div>
+</section>
+
+<footer>
+  <b>证据强度披露</b> · AesRM 与 VBench-2.0 均为<b>未经同行评审的 preprint</b>；只有 AIGVE 综述过了评审（workshop 级，门槛低于主会）。AesRM「打赢既有奖励模型」是作者自报，作者名单含 Wan 的所有者阿里，效果温和（1.2k 视频用户研究仅 45% 样本改善，未报变差比例）。VBench-2.0 的 95–99% 人类一致率同为自报，无独立复现。多名验证者 WebSearch 配额耗尽，部分条目「未找到反证」是弱陈述。<br><br>
+  全部 GitHub 数字为 <b>2026-08-20</b> 快照。完整研究记录、被否清单与出处见项目仓 <span class="mono">docs/notes/</span>。
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var K='videoooo-ladder-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(K)||'{}') }catch(e){ st={} }
+  var rungs=[].slice.call(document.querySelectorAll('.rung'));
+  var bar=document.getElementById('pbar'), num=document.getElementById('pnum');
+
+  function paint(){
+    var n=0;
+    rungs.forEach(function(r){
+      var on=!!st[r.dataset.k];
+      r.classList.toggle('done',on);
+      if(on) n++;
+    });
+    bar.style.width=(n/rungs.length*100)+'%';
+    num.textContent=n+' / '+rungs.length;
+  }
+  rungs.forEach(function(r){
+    var tick=r.querySelector('.tick');
+    tick.setAttribute('role','checkbox');
+    tick.setAttribute('tabindex','0');
+    tick.setAttribute('aria-label','标记 '+r.dataset.k+' 为已完成');
+    function toggle(e){
+      e.preventDefault(); e.stopPropagation();
+      st[r.dataset.k]=!st[r.dataset.k];
+      tick.setAttribute('aria-checked',String(!!st[r.dataset.k]));
+      try{ localStorage.setItem(K,JSON.stringify(st)) }catch(err){}
+      paint();
+    }
+    tick.addEventListener('click',toggle);
+    tick.addEventListener('keydown',function(e){
+      if(e.key===' '||e.key==='Enter') toggle(e);
+    });
+    tick.setAttribute('aria-checked',String(!!st[r.dataset.k]));
+  });
+  paint();
+})();
+</script>
