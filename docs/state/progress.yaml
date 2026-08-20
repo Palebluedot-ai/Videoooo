@@ -3,8 +3,8 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "排程 S1 · 定题材（30 分钟硬闸；15 节排程见 notes/07-study-runway.md）"
-current_bottleneck: "无阻塞。能力阶梯已定版（docs/notes/04-capability-ladder.md），L0 可直接开工"
+current_phase: "S1 基本完成（题材已拍板：加密晨报动画播报）—— brief.md 待勘误 ❓ 项，下一步 S2 验尺子"
+current_bottleneck: "无阻塞。brief.md 的 ❓ 项待 Chao 勘误（形态/主播方向可后拍），不挡 S2"
 monitoring_summary: "2026-08-20 会话级排程落定（15 节 / 7 闸 / 判据三档）：3 份候选方案全被证伪后合成。连带修掉校验器 v1 两个静默放行洞（模板副本可过门 / dict 写法跳检查），v2 经 8 fixture 正反验证。"
 
 phases:
