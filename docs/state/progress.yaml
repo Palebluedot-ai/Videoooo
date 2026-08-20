@@ -3,9 +3,9 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "L0 · 前期设定 —— 做角色 turnaround + 5-Aspect 分镜表（一帧都不生成）"
+current_phase: "L0 · 前期设定 —— 学习期（反推法，不生成一帧）"
 current_bottleneck: "无阻塞。能力阶梯已定版（docs/notes/04-capability-ladder.md），L0 可直接开工"
-monitoring_summary: "2026-08-20 补上 SOP 缺口：从 OpenMontage cinematic 流水线源文件逐字读出 8 阶段 + 5-Aspect 分镜规范 + 资产/合成硬规则，另加传统动画 character sheet 六件套与 turnaround 标准。L0 由「拉片测试」改为「前期设定」，12 破绽降级为贯穿全程的验收表。"
+monitoring_summary: "2026-08-20 补上学习法这一层（notes/06）：读序、学习循环五步、反推法（拿成片当教材反推分镜表，不生成一帧）、学习台账、三个学习期误区。用户明确：先不训练，要 SOP 和教程。"
 
 phases:
   # 路径 v3：能力难度轴（作品驱动 P1-P4 已废——那是生产流程轴，混淆两轴 = 第一个弯路）
@@ -59,6 +59,8 @@ notes: |
   而且学的是「怎么绕开」不是「怎么写更好的 prompt」。
   两份正文：04 能力阶梯（学什么/怎么算过关）+ 05 工业级 SOP（具体怎么做）。
   可打勾版：docs/notes/ladder.html（也已发布为 artifact）
+  学习法见 notes/06-how-to-study.md —— 当前是「学习期」，用反推法（输入端学习），不生成。
+  第七节给了不训练版的六步，走完即过 L0。
   L0 工作包已就位：templates/ 三个模板 + tools/check_shotlist.py 校验器
   （正反两向已验：示例表退出码 0，故意写错退出码 1）。开工三步见 templates/README.md。
   L0 修正记录：原 L0「拉片找 12 破绽」是测试不是方法，已改为「前期设定」；

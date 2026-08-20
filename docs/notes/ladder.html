@@ -203,6 +203,38 @@ th{
 tbody tr:last-child td{border-bottom:0}
 td .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px}
 
+/* ── loop ── */
+.loop{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 20px}
+.loop .lp{
+  flex:1 1 140px;min-width:140px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:2px;padding:12px 13px
+}
+.loop .lp b{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
+.loop .lp b i{font-family:var(--mono);font-style:normal;color:var(--accent);margin-right:5px}
+.loop .lp span{font-size:12.5px;color:var(--ink-2);line-height:1.5;display:block}
+.loop .lp.key{border-left-color:var(--warn);background:var(--warn-soft)}
+.loop .lp.key b i{color:var(--warn)}
+
+.readorder{display:flex;flex-direction:column;gap:6px;margin:8px 0 20px}
+.ro{
+  display:grid;grid-template-columns:28px 1fr auto;gap:13px;align-items:center;
+  background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:11px 14px
+}
+.ro .n{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--accent)}
+.ro .w{font-size:14.5px}
+.ro .w em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.ro .t{font-family:var(--mono);font-size:12px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.steps6{display:flex;flex-direction:column;gap:5px;margin:10px 0 4px}
+.s6{
+  display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:baseline;
+  padding:10px 13px;background:var(--surface);border:1px solid var(--line);border-radius:2px
+}
+.s6 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent)}
+.s6 .d{font-size:14px}
+.s6 .d em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-3);margin-top:2px;font-family:var(--mono)}
+.s6 .t{font-family:var(--mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+
 /* ── pipeline ── */
 .pipe{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 24px;align-items:stretch}
 .pipe .st{
@@ -308,7 +340,7 @@ footer b{color:var(--ink-2)}
 <header>
   <div class="eyebrow">Videoooo · 学习文档 01</div>
   <h1>AI 视频能力阶梯</h1>
-  <p class="standfirst">学什么、怎么算过关、<b>具体怎么做</b>。七级阶梯逐级打勾，配一套从 48.9k★ 开源流水线源文件里逐字读出来的工业级 SOP——分镜、三视图、设定集。每一处的证据等级都标出来了，你可以推翻任何一级。</p>
+  <p class="standfirst"><b>怎么学</b>、学什么、怎么算过关、具体怎么做。这个领域还没有教科书——所以第一节先定学习法，再给七级阶梯与一套从 48.9k★ 开源流水线源文件里逐字读出来的工业级 SOP。每一处的证据等级都标出来了，你可以推翻任何一级。</p>
   <div class="meta">
     <span>2026-08-20</span>
     <span>2 轮 deep-research</span>
@@ -324,16 +356,81 @@ footer b{color:var(--ink-2)}
 </div>
 
 <section>
-  <h2><span class="num">01 / 先分清两条轴</span>混淆这两条 = 第一个弯路</h2>
+  <h2><span class="num">01 / 学习法</span>这个领域没有教科书，所以先定怎么学</h2>
+  <p class="lede">调研结论摆在那里：<b>没有任何机构发布过能力判据或卡点数据</b>，7 条这类主张被 3 票否决。把 AI 视频当工程学系统论述的东西还不存在。这意味着你的学习方式必须和「学一门有教科书的学科」不同。</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th></th><th>有教科书的学科</th><th>AI 视频（现在）</th></tr></thead>
+    <tbody>
+      <tr><td><b>路径</b></td><td>读教材 → 做习题 → 考试</td><td><b>没教材、没习题集、没考官</b></td></tr>
+      <tr><td><b>判据</b></td><td>权威给</td><td><b>自己从质量 rubric 反向构造</b></td></tr>
+      <tr><td><b>大纲</b></td><td>跟着走</td><td><b>自己搭</b>（就是第 03 节那份）</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note crit">所以学习法的核心不是「找到好教程」，是<b>建立自己的判据与反馈回路</b>。这也是为什么这一页到处标着证据等级——<b>你在学一个没人给标准答案的东西，标注能力比记忆能力重要。</b></div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 10px">读的顺序（不能换）</h3>
+  <div class="readorder">
+    <div class="ro"><span class="n">1</span><span class="w">本页第 02 节 · 地基<em>搞清为什么学习顺序是这样排的</em></span><span class="t">20 min</span></div>
+    <div class="ro"><span class="n">2</span><span class="w">本页第 04 节 · 工业级 SOP <b>全篇</b><em>唯一需要接近背下来的东西：5-Aspect 五维、camera 七项顺序、设定集六件套</em></span><span class="t">60 min</span></div>
+    <div class="ro"><span class="n">3</span><span class="w">本页第 03 节 · 阶梯 L0–L6<em>当地图查，不用一次读完</em></span><span class="t">30 min</span></div>
+    <div class="ro"><span class="n">4</span><span class="w">五段式提示词方法论<em>表达层。放在 SOP 之后读</em></span><span class="t">30 min</span></div>
+  </div>
+  <div class="note"><b>顺序不能换。</b>先读五段式再读 SOP，你会把表达层当成规划层——这正是 SOP 那节点名的弯路。</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 10px">学习循环：一个可重复的最小单元</h3>
+  <div class="loop">
+    <div class="lp"><b><i>①</i>读规范</b><span>只读当前这一小块。读完能复述判据，否则重读</span></div>
+    <div class="lp"><b><i>②</i>拆最小单元</b><span>拆到 <b>30 分钟内能验一次</b>。做不到就继续拆</span></div>
+    <div class="lp"><b><i>③</i>做一次</b><span><b>必须有产出物。</b>只读不产出 = 没学</span></div>
+    <div class="lp"><b><i>④</i>用判据验</b><span>机器判据 &gt; 清单 &gt; 自我感觉</span></div>
+    <div class="lp key"><b><i>⑤</i>记认知差</b><span>「我原以为 X，实际是 Y」。<b>没有认知差 = 这轮白做</b></span></div>
+  </div>
+  <div class="note"><b>⑤ 是最容易被跳过、也最值钱的一步。</b>认知差是学习真正发生的地方。攒够 20 条，你就有了这个领域里别人没有的东西——因为<b>没人公开发过</b>。</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 10px">⭐ 「先不训练」的正确形态：反推法</h3>
+  <p class="lede" style="margin-bottom:14px">不想动手生成是对的——<b>但纯读会失效</b>，因为这套东西的判据全是产出物。解法是<b>输入端学习</b>：拿别人的成片当教材，对着规范反推。不生成一帧，不花一分钱，练的是真能力。</p>
+  <pre>挑一个镜头（5–15 秒）
+  → 对着 5-Aspect 五维，反推它的分镜表怎么写
+  → 填进 shots.yaml，跑校验器
+  → 跟原片对照：我推出来的，和它实际呈现的，差在哪</pre>
+  <div class="readout" style="margin-top:18px">
+    <div class="g"><b>为什么最有效</b>不消耗生成额度，没有抽卡随机性干扰 · <b>有标准答案</b>（原片就在那，推错一眼看得出）· 直接练 L0 而 L0 是后面每级的输入 · 一个镜头 15 分钟，符合 30 分钟回路</div>
+    <div class="r"><b>三个梯度</b><b>易</b> 静止或单一运镜 · <b>中</b> 主体运动 + 运镜（<b>最常推错：分不清主体动还是镜头动</b>）· <b>难</b> 多主体 + 景深变化 + 有 overlay</div>
+  </div>
+
+  <div class="scroll" style="margin-top:22px"><table>
+    <thead><tr><th>关于「拉片」的一处更正</th><th>最早那版（错）</th><th>现在这版（对）</th></tr></thead>
+    <tbody>
+      <tr><td><b>身份</b></td><td><b>过关测试</b>——考你能不能看出破绽</td><td><b>学习手段</b>——用成片当教材反推规范</td></tr>
+      <tr><td><b>产出</b></td><td>一张打分表</td><td><b>一张分镜表</b>（可机器校验）</td></tr>
+      <tr><td><b>学到什么</b></td><td>「这条片子有问题」</td><td><b>「这个效果是怎么写出来的」</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>看破绽是诊断，反推是学习。</b>12 破绽表的正确位置是 L1 起的验收 QC 门（第 05 节）。</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 10px">还有一条：别混淆两条轴</h3>
   <div class="scroll"><table>
     <thead><tr><th></th><th>生产流程轴</th><th>能力难度轴</th></tr></thead>
     <tbody>
       <tr><td><b>回答什么</b></td><td>做一部片<b>按什么顺序做</b></td><td><b>先练什么后练什么</b></td></tr>
-      <tr><td><b>公开资料</b></td><td><span class="tag t-ev">有</span>Studio Arts 七阶段（8 周 $1,000）</td><td><span class="tag t-no">不存在</span></td></tr>
-      <tr><td><b>长什么样</b></td><td>概念脚本 → 视觉开发 → hero frames → 图生视频 → 画质增强 → 声音配乐 → 终混交付</td><td>本页第 03 节</td></tr>
+      <tr><td><b>公开资料</b></td><td><span class="tag t-ev">有</span>Studio Arts 七阶段</td><td><span class="tag t-no">不存在</span></td></tr>
+      <tr><td><b>本页哪节</b></td><td>第 04 节 SOP</td><td>第 03 节 阶梯</td></tr>
     </tbody>
   </table></div>
-  <p class="lede" style="margin:0">按生产流程学，你第一天就要同时面对分镜、生成、调色、混音——每一样都不会，每一样都在拖后腿。按能力难度学，一次只练一件事。</p>
+  <p class="lede" style="margin:0 0 34px">按生产流程学，第一天就要同时面对分镜、生成、调色、混音——每样都不会，每样都拖后腿。按能力难度学，一次只练一件事。</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:34px 0 10px">你现在具体做什么（不训练版）</h3>
+  <p class="lede" style="margin-bottom:10px">按这个顺序走完，<b>你就过了 L0——而且一帧视频都没生成</b>。到那时再决定要不要开始训练。</p>
+  <div class="steps6">
+    <div class="s6"><span class="n">1</span><span class="d">读第 02 节 + 第 04 节全篇<em>判据：能复述 5-Aspect 五维与 camera 七项顺序</em></span><span class="t">1.5 h</span></div>
+    <div class="s6"><span class="n">2</span><span class="d">建 study-log.md<em>判据：文件存在</em></span><span class="t">2 min</span></div>
+    <div class="s6"><span class="n">3</span><span class="d">挑一条成片，选一个<b>易梯度</b>镜头反推<em>判据：check_shotlist.py 退出码 0</em></span><span class="t">30 min</span></div>
+    <div class="s6"><span class="n">4</span><span class="d">跟原片对照，记第一条认知差<em>判据：study-log 有一行</em></span><span class="t">10 min</span></div>
+    <div class="s6"><span class="n">5</span><span class="d">再反推 4 个镜头，梯度递增<em>判据：5 条认知差；hero 镜头无 ✗</em></span><span class="t">2 h</span></div>
+    <div class="s6"><span class="n">6</span><span class="d">读五段式，把其中一个反推结果<b>翻译成 prompt</b><em>判据：五段齐全，含呼吸行与声音行</em></span><span class="t">40 min</span></div>
+  </div>
+  <div class="note"><b>三个学习期误区</b>（区别于创作误区）：<b>① 一直找更好的教程</b>——这个领域没有教科书，一直找 = 一直不开始，现有材料够启动了 · <b>② 只读不产出</b>——判据全是产出物，读完不产出你不知道自己会不会 · <b>③ 用「感觉学会了」当判据</b>——在没有标准答案的领域里，自我感觉几乎必然高估。</div>
 </section>
 
 <section>
@@ -360,7 +457,7 @@ footer b{color:var(--ink-2)}
 
 <section>
   <h2><span class="num">03 / 阶梯</span>七级，逐级打勾</h2>
-  <p class="lede"><span class="tag t-inf">我构造的</span>地基是上一节的证据，编排是我的推论。点开每一级看判据、练习、卡点。<b>「具体怎么做」在下一节的 SOP。</b>勾选状态存在你自己的浏览器里。</p>
+  <p class="lede"><span class="tag t-inf">我构造的</span>地基是上一节的证据，编排是我的推论。点开每一级看判据、练习、卡点。<b>「怎么学」在第 01 节，「具体怎么做」在第 04 节 SOP。</b>勾选状态存在你自己的浏览器里。</p>
 
   <div class="prog">
     <span>进度</span><div class="track"><i id="pbar"></i></div><span id="pnum">0 / 7</span>

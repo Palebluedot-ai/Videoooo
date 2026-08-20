@@ -1,0 +1,73 @@
+# 5-Aspect Shot List —— 每个镜头五维必须全填
+# 规范来源：OpenMontage cinematic pipeline / scene-director.md（逐字读取）
+# 校验：uv run tools/check_shotlist.py templates/shots.example.yaml
+#
+# ⚠️ 硬规则三条：
+#   1. overlays（字幕/图形）不进 spatial_framing 的景深轴，单独写在 scene.overlays
+#   2. camera 的书写顺序被规定死：
+#      playback_speed → lens_distortion → height → angle → focus_dof → steadiness → movement
+#   3. hero 镜头五维必须全部写明——"Vague hero-frame specs are the single most
+#      common failure mode"
+
+project: "示例项目"
+beat_map: "Hook → Escalation → Reveal → Landing"
+
+shots:
+  # ── 一个填满的示例，照着这个填 ──
+  - id: S01
+    hero: true                      # hero 镜头必须五维全填，非 hero 可略写但不能空
+    beat: Hook
+    duration_s: 6
+
+    subject: >
+      单个机器人清道夫。哑光深灰金属外壳，胸口一块 8×8 像素表情屏（当前显示两个圆点=待机）。
+      左肩有一道未修补的凹陷。画面里只有它一个主体，无需消歧义。
+
+    subject_motion: >
+      0-2s 静止，仅像素屏两点缓慢明灭一次；
+      2-4s 缓慢抬起右臂，机械关节有一次 0.1 秒的应激微颤；
+      4-6s 手掌张开，掌心尘埃被气流带起。
+      交互：主体↔尘埃（气流），无第二主体。
+
+    scene:
+      overlays: []                  # ← 字幕/图形只写这里，绝不写进 spatial_framing
+      pov: 第三人称客观视角
+      setting: 废弃地铁站台，瓷砖剥落，积水反光
+      time_of_day: 无自然光，仅应急灯（顶部偏右）
+      dynamics: 空气中持续飘浮的细尘；远处有一处灯管间歇闪烁
+
+    spatial_framing: >
+      shot_size: 中近景（腰部以上）；
+      position_in_frame: 主体居左三分线；
+      depth: FG=飘浮尘埃 / MG=机器人 / BG=虚化的站台立柱与应急灯；
+      camera_height_relative: 略低于主体胸口，微仰
+
+    camera: >
+      playback_speed: 正常速度；
+      lens_distortion: 35mm 无明显畸变；
+      height: 胸口以下约 20cm；
+      angle: 微仰 10 度；
+      focus_dof: 浅景深 f/2.0，焦点在像素屏，背景奶化；
+      steadiness: 手持，全程极轻微如呼吸般浮动；
+      movement: 极缓向前推进（约 15cm 全程）
+
+    sound: "无配乐，仅现场同期声：低频电流嗡鸣 + 远处滴水"
+    notes: "参考图用 turnaround 的正面视图；prompt 里逐字重复主体描述"
+
+  # ── 从这里开始填你自己的 ──
+  - id: S02
+    hero: false
+    beat: Escalation
+    duration_s:
+    subject:
+    subject_motion:
+    scene:
+      overlays: []
+      pov:
+      setting:
+      time_of_day:
+      dynamics:
+    spatial_framing:
+    camera:
+    sound:
+    notes:
