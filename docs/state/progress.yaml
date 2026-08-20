@@ -3,69 +3,46 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "S1 基本完成（题材已拍板：加密晨报动画播报）—— brief.md 待勘误 ❓ 项，下一步 S2 验尺子"
-current_bottleneck: "无阻塞。brief.md 的 ❓ 项待 Chao 勘误（形态/主播方向可后拍），不挡 S2"
-monitoring_summary: "2026-08-20 会话级排程落定（15 节 / 7 闸 / 判据三档）：3 份候选方案全被证伪后合成。连带修掉校验器 v1 两个静默放行洞（模板副本可过门 / dict 写法跳检查），v2 经 8 fixture 正反验证。"
+current_phase: "框架 v1 已立（docs/ROADMAP.md）· 下一步 = F1 主播形象拍板 → M1 开工"
+current_bottleneck: "F1 主播形象方向（三选一）——唯一挡 M1 开工的决定"
+monitoring_summary: "2026-08-20 两次纠偏收口：①验收归 AI（用户零基础无法自验收）②不做互动式派任务，改为产出物倒推的总框架 ROADMAP v1（M1 主播→M2 样片→M3 手册→M4 管线→M5 日更），框架本身迭代完善。"
 
 phases:
-  # 路径 v3：能力难度轴（作品驱动 P1-P4 已废——那是生产流程轴，混淆两轴 = 第一个弯路）
-  - id: "L0-preproduction"
-    file: "docs/phases/phase-L0-preproduction.md"
+  # 框架 v1（docs/ROADMAP.md）：里程碑以产出物定义；能力阶梯 L0-L6 降为随行的知识线
+  - id: "M1-anchor"
+    file: "docs/ROADMAP.md"
     range: "1"
     self_contained: true
-    status: "todo"            # 判据：交付角色 turnaround（5 视图+HEX色标）+ 5-Aspect 分镜表
+    status: "todo"            # 产出：主播设定集(turnaround+色标)+场景图；前置：F1 拍板
     error_signals_unhandled: 0
-  - id: "L1-one-shot"
-    file: "docs/notes/04-capability-ladder.md#L1"
+  - id: "M2-first-episode"
+    file: "docs/ROADMAP.md"
     range: "2"
     self_contained: true
-    status: "todo"            # 判据：一条 5-10 秒片段，12 破绽 0 命中
+    status: "todo"            # 产出：一集全手工样片；最大里程碑，做完能力就有底
     error_signals_unhandled: 0
-  - id: "L2-design-around"
-    file: "docs/notes/04-capability-ladder.md#L2"
+  - id: "M3-playbook"
+    file: "docs/ROADMAP.md"
     range: "3"
-    self_contained: true
-    status: "todo"            # ★分水岭 判据：任一崩溃维度能给 ≥2 种绕开方案
-    error_signals_unhandled: 0
-  - id: "L3-consistency"
-    file: "docs/notes/04-capability-ladder.md#L3"
-    range: "4"
-    self_contained: true
-    status: "todo"
-    error_signals_unhandled: 0
-  - id: "L4-pipeline"
-    file: "docs/notes/04-capability-ladder.md#L4"
-    range: "5"
-    self_contained: true
-    status: "todo"            # Claude Code 主场
-    error_signals_unhandled: 0
-  - id: "L5-auto-curation"
-    file: "docs/notes/04-capability-ladder.md#L5"
-    range: "6"
-    self_contained: true
-    status: "todo"            # 全网空白，最值钱的自研点
-    error_signals_unhandled: 0
-  - id: "L6-non-visual"
-    file: "docs/notes/04-capability-ladder.md#L6"
-    range: "7"
     self_contained: false
-    status: "todo"            # 学术界无可测量分解，回传统影视教材
+    status: "todo"            # 产出：每集生产手册；判据：第二集耗时降一半
+    error_signals_unhandled: 0
+  - id: "M4-pipeline"
+    file: "docs/ROADMAP.md"
+    range: "4"
+    self_contained: false
+    status: "todo"            # 产出：一条命令出一集；学写代码的主战场
+    error_signals_unhandled: 0
+  - id: "M5-daily"
+    file: "docs/ROADMAP.md"
+    range: "5"
+    self_contained: false
+    status: "todo"            # 产出：定时+自动发送；触发 P1 复审
     error_signals_unhandled: 0
 
 notes: |
-  路径 v3（能力难度轴）：L0 前期设定 → L1 单镜头 → L2 规避设计★ → L3 一致性 →
-  L4 管线 → L5 自动筛选 → L6 非视觉。v2 的作品驱动 P1-P4 已废——那是生产流程轴。
-  构造原则（全文方法核心）：模型饱和的维度不学；模型崩溃的维度重点学，
-  而且学的是「怎么绕开」不是「怎么写更好的 prompt」。
-  两份正文：04 能力阶梯（学什么/怎么算过关）+ 05 工业级 SOP（具体怎么做）。
-  可打勾版：docs/notes/ladder.html（也已发布为 artifact）
-  ⭐ 排程：notes/07-study-runway.md —— 15 节，S1 定题材是当前动作（30 分钟硬闸）。
-  尺子已修 v2：bash tools/run_fixtures.sh 是每次改动后的回归命令。
-  ⭐ 零基础入口：docs/notes/course.html「AI 视频入门六课」——参考文档的教学化改写。
-  学习法见 notes/06-how-to-study.md —— 当前是「学习期」，用反推法（输入端学习），不生成。
-  第七节给了不训练版的六步，走完即过 L0。
-  L0 工作包已就位：templates/ 三个模板 + tools/check_shotlist.py 校验器
-  （正反两向已验：示例表退出码 0，故意写错退出码 1）。开工三步见 templates/README.md。
-  L0 修正记录：原 L0「拉片找 12 破绽」是测试不是方法，已改为「前期设定」；
-  12 破绽降级为 L1 起每级都过的验收 QC 门（工业界 QC gate 本就贯穿全程）。
-  台账纪律不变：每条生成记「选没选中」——那一列是 L5 的训练数据。
+  主框架 = docs/ROADMAP.md（产出物倒推，v1）。完善框架 = 消 ❓ 清单（F1-F7），
+  只有 F1（主播形象）挡 M1 开工。
+  执行原则：验收一律归 AI；用户每天一点，断了接着来，永不重头。
+  能力阶梯（notes/04）与 15 节排程（notes/07）降为知识线与课程骨架，不再是操作面。
+  台账线：每次生成记「选没选中」——M4 后是自动筛选的训练数据。
