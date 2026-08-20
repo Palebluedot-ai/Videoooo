@@ -1,0 +1,502 @@
+<title>Videoooo 十五节排程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F1F1EF; --surface:#FFFFFF; --surface-2:#F7F7F5;
+  --ink:#191C1E; --ink-2:#4A5054; --ink-3:#787E83;
+  --line:#DEDEDA; --line-2:#C9C9C4;
+  --accent:#1B5C58; --accent-soft:#E2EDEC;
+  --ok:#2B6E4F; --ok-soft:#E1EEE7;
+  --warn:#9C6714; --warn-soft:#F5EBDA;
+  --crit:#9E362F; --crit-soft:#F6E3E1;
+  --money:#7A4A9E; --money-soft:#EFE7F6;
+  --shadow:0 1px 2px rgba(20,24,26,.05),0 8px 24px -12px rgba(20,24,26,.14);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --cjk:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#131617; --surface:#1B1F21; --surface-2:#22272A;
+    --ink:#E9EAEA; --ink-2:#A8AFB3; --ink-3:#7C8388;
+    --line:#2C3235; --line-2:#3C4347;
+    --accent:#63BDB4; --accent-soft:#1D2E2D;
+    --ok:#5BA87E; --ok-soft:#1A2A22;
+    --warn:#CFA149; --warn-soft:#2B2419;
+    --crit:#CF7168; --crit-soft:#2C1D1B;
+    --money:#B08FD6; --money-soft:#291F33;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131617; --surface:#1B1F21; --surface-2:#22272A;
+  --ink:#E9EAEA; --ink-2:#A8AFB3; --ink-3:#7C8388;
+  --line:#2C3235; --line-2:#3C4347;
+  --accent:#63BDB4; --accent-soft:#1D2E2D;
+  --ok:#5BA87E; --ok-soft:#1A2A22;
+  --warn:#CFA149; --warn-soft:#2B2419;
+  --crit:#CF7168; --crit-soft:#2C1D1B;
+  --money:#B08FD6; --money-soft:#291F33;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ground);color:var(--ink);font-family:var(--cjk);font-size:16px;
+  line-height:1.72;-webkit-font-smoothing:antialiased;padding:0 20px 100px}
+.wrap{max-width:880px;margin:0 auto}
+code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:1px 5px;
+  border-radius:2px;border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+header{padding:60px 0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:16px}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.16;font-weight:700;letter-spacing:-.015em;margin-bottom:16px;text-wrap:balance}
+.standfirst{font-size:16.5px;color:var(--ink-2);max-width:62ch;text-wrap:pretty}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.meta span{border:1px solid var(--line-2);border-radius:2px;padding:4px 9px;font-variant-numeric:tabular-nums}
+
+/* 判据三档 */
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:26px 0 8px}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:13px 15px;font-size:13.5px;line-height:1.6}
+.tier b{display:block;font-family:var(--mono);font-size:12px;margin-bottom:5px}
+.tier.g b{color:var(--ok)} .tier.y b{color:var(--warn)} .tier.r b{color:var(--crit)}
+.tier span{color:var(--ink-2)}
+
+/* progress */
+.prog{position:sticky;top:0;z-index:9;background:var(--ground);padding:12px 0;
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.prog .track{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.prog .track i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+
+/* phase divider */
+.phase-hd{display:flex;align-items:center;gap:14px;margin:44px 0 16px}
+.phase-hd h2{font-size:19px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.phase-hd .rule{flex:1;height:1px;background:var(--line)}
+.phase-hd .badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:3px 9px;
+  border-radius:2px;white-space:nowrap}
+.badge.free{background:var(--ok-soft);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 30%,transparent)}
+.badge.paid{background:var(--money-soft);color:var(--money);border:1px solid color-mix(in srgb,var(--money) 30%,transparent)}
+
+/* session card */
+.ss{background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;transition:border-color .18s}
+.ss.done{border-color:color-mix(in srgb,var(--ok) 46%,var(--line))}
+.ss-head{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;gap:12px;
+  padding:14px 18px;cursor:pointer;background:none;border:0;width:100%;text-align:left;
+  font-family:inherit;color:inherit}
+.ss-head:hover{background:var(--surface-2)}
+.tick{width:22px;height:22px;border:1.5px solid var(--line-2);border-radius:3px;
+  display:grid;place-items:center;flex:none;transition:.18s;background:var(--surface)}
+.tick svg{width:13px;height:13px;stroke:var(--surface);stroke-width:2.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:.18s}
+.done .tick{background:var(--ok);border-color:var(--ok)}
+.done .tick svg{opacity:1}
+.sn{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);padding:3px 8px;border-radius:2px;white-space:nowrap}
+.ss.money .sn{color:var(--money);background:var(--money-soft)}
+.ss-title{font-size:15.5px;font-weight:700;letter-spacing:-.005em}
+.ss-title small{display:block;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:1px}
+.dur{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.chev{width:14px;height:14px;stroke:var(--ink-3);stroke-width:2;fill:none;transition:transform .2s;flex:none}
+.ss[open] .chev{transform:rotate(180deg)}
+.ss-body{padding:2px 18px 18px;border-top:1px solid var(--line);font-size:14.5px}
+.ss-body .why{background:var(--surface-2);border-radius:2px;padding:10px 13px;margin:12px 0;
+  font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.ss-body ol{margin:12px 0 12px 20px}
+.ss-body li{margin-bottom:7px;line-height:1.62}
+.checks{border-top:1px dashed var(--line);padding-top:11px;margin-top:12px}
+.checks div{display:flex;gap:9px;margin-bottom:7px;font-size:13.5px;line-height:1.6}
+.checks .t{font-family:var(--mono);font-size:11px;font-weight:600;flex:none;padding:1px 6px;
+  border-radius:2px;margin-top:2px}
+.t.g{background:var(--ok-soft);color:var(--ok)} .t.y{background:var(--warn-soft);color:var(--warn)}
+.t.r{background:var(--crit-soft);color:var(--crit)}
+pre{font-family:var(--mono);font-size:12.5px;line-height:1.6;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:2px;padding:10px 13px;overflow-x:auto;
+  margin:8px 0;white-space:pre-wrap}
+
+/* gate */
+.gate{display:grid;grid-template-columns:auto 1fr;gap:13px;background:var(--warn-soft);
+  border:1px dashed color-mix(in srgb,var(--warn) 45%,transparent);border-radius:3px;
+  padding:13px 16px;margin:18px 0 22px;font-size:13.5px;line-height:1.6}
+.gate .gn{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--warn);white-space:nowrap;padding-top:2px}
+.gate b{font-weight:700}
+.gate .fail{color:var(--ink-2);margin-top:5px;display:block}
+.gate.hard{background:var(--crit-soft);border-color:color-mix(in srgb,var(--crit) 45%,transparent)}
+.gate.hard .gn{color:var(--crit)}
+
+/* footer sections */
+.rules{background:var(--surface);border:1px solid var(--line);border-radius:3px;
+  padding:20px 22px;margin:36px 0 0}
+.rules h3{font-size:17px;font-weight:700;margin-bottom:12px}
+.rules ol{margin:0 0 0 20px;font-size:14.5px}
+.rules li{margin-bottom:8px;line-height:1.65}
+.weak{margin-top:28px;font-size:13.5px;color:var(--ink-3);line-height:1.7}
+.weak b{color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:600px){
+  .ss-head{grid-template-columns:auto auto 1fr;row-gap:6px}
+  .dur,.chev{display:none}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Videoooo · 排程</div>
+  <h1>十五节排程</h1>
+  <p class="standfirst">从「读完教程」走到「过 L2 分水岭」。<b>S1–S10 零花费零生成</b>；第一笔钱在 S11（几块钱，出图，须你点头）；第一条视频在 S13。三份候选排程被逐份证伪后合成——证伪环节还抓出了校验器的两个真 bug，已修。完整版（含每节详情与九条已知弱点）在仓里 <code>docs/notes/07-study-runway.md</code>。</p>
+  <div class="meta">
+    <span>15 节 × 45–90 min</span>
+    <span>标称 17–20h · 真实 28–35h</span>
+    <span>每周 2–3 次 → 6–10 周</span>
+  </div>
+
+  <div class="tiers">
+    <div class="tier g"><b>🟩 机器判据</b><span>退出码。只测结构——格式完美的胡话能 100% 通过，且只在 fixture 覆盖的范围内可信</span></div>
+    <div class="tier y"><b>🟨 客观人工判据</b><span>预测命中率、逐帧对照。需要你亲自看，但有对错</span></div>
+    <div class="tier r"><b>🟥 自评</b><span>几乎必然高估。<b>没有任何一道闸单独靠它</b></span></div>
+  </div>
+</header>
+
+<div class="prog"><span>进度</span><div class="track"><i id="pbar"></i></div><span id="pnum">0 / 15</span></div>
+
+<div class="phase-hd"><h2>学习期</h2><div class="rule"></div><span class="badge free">S1–S10 · ¥0 · 零生成</span></div>
+
+<details class="ss" data-k="S1"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S1</span><span class="ss-title">定题材<small>把「做精品短片」变成一句能被反驳的话</small></span>
+  <span class="dur">60–75m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>读 course.html 第 1 课 + 阶梯 2.1 节那张表。<b>只读这两块</b></li>
+      <li>新建 <code>docs/preproduction/brief.md</code>：<b>三个</b>候选题材，各 3 行（主角 / 一句话冲突 / 30–60 秒）</li>
+      <li>逐个过<b>五问否决表</b>：真人脸主角？手部特写？画面内文字？背景群演？镜面反射？——「是」的改设计或划掉</li>
+      <li>选一个写死 logline + 一行「为什么不选另外两个」；<code>cp templates/study-log.md docs/study-log.md</code> 记第一行</li>
+    </ol>
+    <div class="why">⏱ <b>30 分钟硬闸</b>：选不出就掷硬币——三个都是你写的，差别没你以为的大。<b>禁止上网找灵感</b>，那是最体面的放弃方式。</div>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span><code>grep -c '^## ' docs/preproduction/brief.md</code> ≥ 3</span></div>
+      <div><span class="t y">🟨</span><span>五问全部「否」（或写明绕法）。答不出「否」= 题材没选完</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S2"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S2</span><span class="ss-title">验尺子<small>预测 8 个 fixture，再发明你自己的坏例子</small></span>
+  <span class="dur">60–75m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <div class="why">尺子（分镜校验器）曾有两个静默放行洞，已修。你的任务不是修它，是<b>亲手确认它可信到什么范围</b>——你判断不了工具对不对，但你判断得了「我故意弄坏的那一处，它有没有指名道姓报出来」。</div>
+    <ol>
+      <li>读 SOP 第三节（5-Aspect 三条硬规则）</li>
+      <li><b>先预测</b>：看 <code>tools/fixtures/</code> 8 个文件名，在 <code>docs/experiments/gate-audit.md</code> 写下每个会红还是绿、红在哪条</li>
+      <li>跑 <code>bash tools/run_fixtures.sh</code>，对照预测，差异 = 认知差，进 study-log</li>
+      <li><b>发明 2 个新坏例子</b>试图骗过它。骗过了 = 找到新洞（修 + 固化成 fixture）；没骗过 = 确认了覆盖</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>run_fixtures 输出贴进 gate-audit.md</span></div>
+      <div><span class="t y">🟨</span><span>预测差异有记录；2 个自发明例子有结论</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S3"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S3</span><span class="ss-title">读报错<small>让门拦你一次，看它说什么</small></span>
+  <span class="dur">45–60m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>把 <code>docs/preproduction/shots.yaml</code> 的 project 名换成你的题材名</li>
+      <li>跑 <code>--strict</code> —— <b>它必须红</b>（示例镜头还是模板的）</li>
+      <li><b>逐条读报错</b>：每条能不能让你知道改哪里？读不懂的让 Claude 改文案</li>
+      <li>删示例镜头，把空行补成你题材第一镜的<b>草稿</b>（允许粗糙，本节只求过非 strict）</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>非 strict 通过；<code>run_fixtures.sh</code> 仍绿（没弄坏尺子）</span></div>
+      <div><span class="t y">🟨</span><span>每条报错都读懂了</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate hard"><span class="gn">闸 G0</span><span><b>尺子可信</b>——run_fixtures 全符 + 自发明坏例子有结论。<b>唯一绝对不能绕的闸。</b><span class="fail">新洞修不好 → 删掉那个检查项并写明「这类错机器抓不到，靠人工」——诚实的空缺好过假绿灯。</span></span></div>
+
+<details class="ss" data-k="S4"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S4</span><span class="ss-title">反推 #1 · 易梯度<small>先写预测卡，再看片</small></span>
+  <span class="dur">75–90m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li><b>定片源</b>（限时 15 分钟）：一部能逐帧看的<b>真人实拍</b>片。网页片暂停后 <code>,</code> <code>.</code> 单帧步进。<b>不下载不入库</b>——仓里只写时间码和文字</li>
+      <li>挑<b>易梯度</b>镜头（5–15 秒，静止或单一运镜），记「片名 + 起止时间码」</li>
+      <li><b>先写预测卡</b> <code>BS01-predict.md</code>：看片前从七问挑 3 条写死答案（背景相对画框动没动？主体位置变没变？有硬阴影吗？焦点变过吗？有 overlay 吗？慢动作吗？镜头有无微浮动？）</li>
+      <li>逐帧验证，每条 ✓/✗，✗ 的写「我为什么会那么以为」</li>
+      <li>填 <code>BS01.yaml</code>。<b>lens_distortion 只写「广角拉伸/中性/长焦压缩」、focus_dof 只写「深/浅/变焦点」，都加 ⏸猜测</b>——成片读不出参数，硬填是编</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span><code>--strict</code> 对 BS01.yaml 退出 0</span></div>
+      <div><span class="t y">🟨</span><span><b>预测卡命中率才是分数</b>，退出码只证明格式没错</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S5"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S5</span><span class="ss-title">反推 #2 · 中梯度<small>主体动还是镜头动</small></span>
+  <span class="dur">60–75m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>挑一个<b>主体运动 + 运镜同时发生</b>的镜头（最常推错的地方）</li>
+      <li>预测卡<b>必含</b>「背景相对画框动没动」（唯一客观答案）</li>
+      <li>硬纪律：<b>subject_motion 只写主体，camera.movement 只写镜头，同一件事不许两处都写</b></li>
+      <li>记实际耗时——只记录，<b>不设「必须比上次快」</b></li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span><code>--strict</code> 退出 0</span></div>
+      <div><span class="t y">🟨</span><span>预测已标；两处分工无重复</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S6"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S6</span><span class="ss-title">反推 #3 · 难梯度<small>故意先写错，看它报错，再改对</small></span>
+  <span class="dur">60–75m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>挑<b>多主体 + 明显景深 + 有字幕/图形</b>的镜头</li>
+      <li>第一遍<b>故意</b>把字幕写进 spatial_framing，跑校验器，报错贴 study-log</li>
+      <li>改进 <code>scene.overlays</code>，再跑</li>
+      <li><code>subject</code> 必须做<b>消歧义</b>（谁是谁怎么区分）</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>破坏版 EXIT=1 <b>且报的是 overlays 那条</b>；改对后 strict 退出 0</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S7"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S7</span><span class="ss-title">盲区提炼<small>做出一份别人写不出来的东西</small></span>
+  <span class="dur">45–60m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>摊开三张预测卡的所有 ✗</li>
+      <li>新建 <code>docs/notes/my-checklist.md</code>：「我反复推错的事 / 证据镜头 / 下次开工前先做什么」，<b>≥3 行每行挂 BS0x</b></li>
+      <li>「先做什么」必须是可执行动作（例：填 camera 前先只看背景边缘 5 秒）</li>
+      <li>从此每节开工第一件事：读一遍这张表</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>表 ≥3 行且每行挂 BS0x</span></div>
+      <div><span class="t y">🟨</span><span>逐条自问：是不是<b>只有做过这三次反推的人</b>才写得出来？套话删掉重写</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate"><span class="gn">闸 G1</span><span><b>反推可靠</b>——BS01–03 全过 strict，9 条预测命中率有记录，my-checklist ≥3 行。<span class="fail">命中率<b>无上升趋势</b> → 反推法对你无效（它本无实证），<b>直接跳 S8</b>，记一行证据。这比硬练第 4 个镜头值钱。</span></span></div>
+
+<details class="ss" data-k="S8"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S8</span><span class="ss-title">beat map<small>把散镜头挂回结构</small></span>
+  <span class="dur">60–75m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>读 SOP 第二节（15 分钟）</li>
+      <li>填 <code>beat-map.md</code>：Hook / Escalation / Reveal / Landing 各一句话 + 时长 + 对应镜头号</li>
+      <li><b>silence_windows 写具体秒数</b>（沉默是设计对象）</li>
+      <li>四拍不可能都单独占镜头 → <b>明写哪一拍由哪一镜兼任、为什么</b></li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>silence_windows 区块含数字</span></div>
+      <div><span class="t y">🟨</span><span>验收四条自查；四拍映射无孤儿</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S9"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S9</span><span class="ss-title">★ L2 纸面：约束清单<small>分水岭的前半</small></span>
+  <span class="dur">75–90m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <div class="why"><b>为什么在花钱之前</b>：L1 的典型卡点是「以为 prompt 不好，其实选题落在崩溃维度」。不先建立这个概念，第一次生成会把随机性和能力搅成一团，然后归因到自己身上。</div>
+    <ol>
+      <li>读阶梯 2.1 + L2；<b>看一遍《丧尸清道夫》，只列它没拍什么</b>（真人脸/手/文字/群演/镜面）</li>
+      <li>新建 <code>constraints.md</code>，顶部写死免责：百分比来自 2025-03 那批模型，<b>每条都是假设</b>，S14 实测后替换</li>
+      <li>填表：题材元素 / 崩溃维度 / 绕法A / 绕法B / chosen / 绑到哪拍——<b>四维全覆盖，每行 ≥2 绕法</b></li>
+      <li>让 Claude 写 <code>check_constraints.py</code>（只查结构）+ 你自己写 2 个 fixture</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>校验器过 + 2 fixture 各红</span></div>
+      <div><span class="t y">🟨</span><span><b>「改后拍的是另一件事」测试</b>逐行过——只是措辞变了 = 作废重写</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate"><span class="gn">闸 G2</span><span><b>L2 纸面</b>——每行过「另一件事」测试。<span class="fail">过不了的那行绕法作废重写，<b>不许改判据迁就</b>。某维度题材踩不到 → 写明原因即合法。</span></span></div>
+
+<details class="ss" data-k="S10"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S10</span><span class="ss-title">开闸会话<small>平台实读 + 开户 + 记账 · 仍零生成 · 有硬 block 风险</small></span>
+  <span class="dur">60–90m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li><b>实读官网</b>（不许凭记忆）：BytePlus ModelArk / 即梦 / LibTV 的注册页与定价页，当天看到的写进 <code>platform-check.md</code>，带链接 + 日期</li>
+      <li><b>走注册</b>。香港手机号/证件卡住 → 立刻停，四要素（What/Where/How/Severity）写下，换下一家</li>
+      <li><code>cp .env.example .env</code> 填 key（只进 .env）</li>
+      <li>写 <code>budget.md</code>：单镜头止损线 / 单会话上限 / 总预警线（锚：Seedance 2.5 低至 ¥0.4/秒挂牌价；简单镜头 2–3 抽、难镜头 20+）</li>
+      <li>从 12 破绽表裁出<b>适用你题材</b>的子集 → <code>qc-tells.md</code>，不适用的写明为什么（<b>必须在生成前做完</b>）</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span><code>git check-ignore -v .env</code> 有输出；key 非空</span></div>
+      <div><span class="t y">🟨</span><span>至少一家账号可用，或 blocker 四要素已写明</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate hard"><span class="gn">闸 G3</span><span><b>开闸（钱）</b>——budget / qc-tells 就位，≥1 家账号可用，<b>且你本人说「开始花钱」（🟥 唯一一处，且只管钱不管质量）</b>。<span class="fail">三家全过不去 → <b>排程停在这里</b>（硬 block 不是你的问题）：回 S4 再反推两镜（不花钱那条路），同时另找平台。</span></span></div>
+
+<div class="phase-hd"><h2>花钱期</h2><div class="rule"></div><span class="badge paid">S11 起 · 每步先经你点头</span></div>
+
+<details class="ss money" data-k="S11"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S11</span><span class="ss-title">★ 第一笔钱：turnaround 出图<small>图，不是视频 · 几块钱</small></span>
+  <span class="dur">75–90m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <div class="why"><b>为什么绕不过</b>：L0 判据白纸黑字要五视图 + HEX 色标，且它是 L3 的唯一资产源头。要么现在做，要么明确降级并登记解禁点——<b>不许假装 L0 过了</b>。</div>
+    <ol>
+      <li><b>先出基准角色图</b>（turnaround prompt 是图生图，没基准图跑不了）</li>
+      <li>出 turnaround。<b>只有 turnaround 这个词不能改</b>，整条 prompt 可改——引文那条是 four-panel 不含 3⁄4 视图，与五视图判据冲突：分两次出或改写，改动登记进 phase 卡</li>
+      <li><b>重试上限 3 轮</b>，超了交四视图 + 登记偏离，不许无限重出</li>
+      <li>填完 character-sheet 六件套；花费记 budget.md</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>HEX 色标 ≥4 处</span></div>
+      <div><span class="t y">🟨</span><span>五视图对基准线比头顶/肩/腰/脚；图不入 git（≤200KB 缩略图除外）</span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S12"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S12</span><span class="ss-title">自己的分镜表 → 撞 L0 闸<small>3–5 镜，≥1 hero 五维全填</small></span>
+  <span class="dur">75–90m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>重写 <code>shots.yaml</code>：3–5 镜全部来自 beat-map，≥1 个 hero 五维全填</li>
+      <li><b>每镜加一行 notes：用了 constraints.md 哪条绕法</b></li>
+      <li>开工前读 my-checklist，收工前逐镜对它自查</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span><code>--strict</code> 退出 0；与模板 diff <b>必须有差异</b>；fixtures 仍绿</span></div>
+      <div><span class="t y">🟨</span><span>绕法引用都能找到对应行</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate"><span class="gn">闸 G4</span><span><b>L0 过关</b>——strict 过 + 模板有 diff + turnaround 五视图交付。<span class="fail"><b>turnaround 没做不许标 L0 done</b>：补做，或登记降级 + 写明解禁点（L3 第一件事变成补它）。</span></span></div>
+
+<details class="ss money" data-k="S13"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S13</span><span class="ss-title">★ 第一条视频<small>同一 hero 镜头抽 10–15 次 · 大概率拆成 2–3 节</small></span>
+  <span class="dur">90m 硬停</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <div class="why"><b>学习期终点。为什么是这里</b>：四件保护装置齐了——绕开崩溃维度的题材（S1+S9）、生成前裁好的 QC 清单（S10）、止损线（S10）、拦得住的分镜表（S12）。<b>少任何一样，第一次生成测的都是运气而不是能力。</b></div>
+    <ol>
+      <li>读五段式方法论第一节，把 hero 镜头翻译成五段式（呼吸感行、声音行必备）</li>
+      <li>写调用脚本，<b>放 docs/experiments/ 不放 tools/</b>。铁律：<b>先 print(resp) dump 真实响应再写解析</b></li>
+      <li>抽 <b>10–15 次</b>（抽卡方差本身就是 L1 要学的东西，抽 3 次省的钱让你什么都学不到）</li>
+      <li><code>L1-log.md</code> 每行：日期/prompt版本/model/参数/seed/第几抽/花费/<b>命中哪几条 tell</b>/<b>选没选中</b>——最后这列是 L5 的训练数据，不许省</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span>台账 ≥10 行且「选没选中」无空值；总花费 ≤ budget 上限</span></div>
+      <div><span class="t y">🟨</span><span>每抽对 qc-tells 逐条判定</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate"><span class="gn">闸 G5</span><span><b>L1 过关</b>——最好那条在适用 tell 上 0 命中。<span class="fail">15 抽无一条 0 命中 → <b>先查是否踩崩溃维度</b>（对 constraints.md）。是 → 跳 S14 改设计；不是 → 改 prompt 最多 2 次，第 3 次仍败就记认知差、L1 标 todo、带着问题走 S14。</span></span></div>
+
+<details class="ss money" data-k="S14"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S14</span><span class="ss-title">★ L2 实证<small>A/B：把假设换成实测数字 · ¥40 量级</small></span>
+  <span class="dur">90m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>从 constraints.md 挑<b>一条</b>绕法做 A/B：A=硬扛版，B=绕开版，其余参数一致</li>
+      <li><b>先写判定线再跑</b>（写进 constraints.md）：B 命中率 ≤ A 的一半 → 成立；4:6~6:4 → <b>未证实</b>（不是「绕法无效」）</li>
+      <li>每臂 10 条；结果写回 verified_by：实测命中率 + 日期 + 模型版本</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t g">🟩</span><span><b>预注册检查</b>：判定线的 commit 必须早于素材（git log 可查）</span></div>
+      <div><span class="t y">🟨</span><span>结论三选一已写。「未证实」是合法结论，<b>不许改判定线去凑</b></span></div>
+    </div>
+  </div>
+</details>
+
+<details class="ss" data-k="S15"><summary class="ss-head">
+  <span class="tick"><svg viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4"/></svg></span>
+  <span class="sn">S15</span><span class="ss-title">结账<small>复述、状态面、下一级入口</small></span>
+  <span class="dur">60m</span><svg class="chev" viewBox="0 0 16 16"><polyline points="3,6 8,11 13,6"/></svg></summary>
+  <div class="ss-body">
+    <ol>
+      <li>写 <code>08-my-L2.md</code>：<b>只写 S14 实测出来的</b>，没验过的标 ⏸</li>
+      <li>主会话更新 progress.yaml：L0/L1/L2 真实状态，没到判据老实标 todo</li>
+      <li>phase 卡补台账，偏离登记齐；方法论心得进想法箱等「agent-on 结账」</li>
+    </ol>
+    <div class="checks">
+      <div><span class="t y">🟨</span><span><b>「能教会别人」可操作版</b>：把 08-my-L2.md 丢给空白会话，让它只读这份文件对新题材产出约束清单，<b>你逐条挑它的错</b>——测的是你挑得出错</span></div>
+    </div>
+  </div>
+</details>
+
+<div class="gate"><span class="gn">闸 G6</span><span><b>L2 分水岭</b>——预注册过 + 结论三选一已写 + 挑错测试挑出 ≥1 真错。<span class="fail">「未证实」<b>不是失败</b>；「反向」（B 更差）是最有价值的产出，重点写。</span></span></div>
+
+<div class="rules">
+  <h3>防停滞六条（全是可执行动作）</h3>
+  <ol>
+    <li><b>每节以绿收尾</b>——手段可以是删掉填不完的半成品镜头让它过。红色过夜是不回来的头号原因</li>
+    <li><b>关电脑前写下一句祈使句</b>进 study-log 末行，必须含文件名和命令。回来时不用重新决策</li>
+    <li><b>15 分钟降梯度</b>：卡满 15 分钟无可验证进展 → 降难度或砍元素，记认知差继续。禁止「先把资料研究清楚再动手」</li>
+    <li><b>90 分钟无条件硬停</b>。S13 尤其：「再抽一次说不定就好」是烧钱和烧热情的同一个机制</li>
+    <li><b>每节一个 commit</b>（<code>sN: 产出物名</code>）。<b>连续两周无 commit = 排程已停</b>，不是「最近有点忙」</li>
+    <li><b>断更超 7 天的回归动作</b>：不重读文档——跑 <code>run_fixtures.sh</code> + 读 study-log 最后那句祈使句，从它开始</li>
+  </ol>
+  <p style="margin-top:14px;font-size:14px;color:var(--ink-2)"><b>两条禁令</b>：搜教程 / 比较课程 / 收藏链接 = 停滞的第一信号（这个领域没有教科书）；progress.yaml 只有主会话写。</p>
+</div>
+
+<div class="weak">
+  <b>已知弱点（九条，完整版在仓里 07 号笔记）</b>：反推法无实证（G1 有 kill switch，但 S4–S7 的 4–5 小时风险只是可见没有消除）· fixture 只覆盖想得到的错法 · S13 时间成本是估计（BytePlus SDK 至今未验证）· S10 有真硬 block 风险（香港实名，无第一手数据）· S14 n=10/臂只能看数量级 · 「能教会别人」是最弱的闸 · 对低频节奏（两周一次）没有适配 · L3 之后有意没排 · <b>最根本：L0–L6 划分本身是自建的，若它错了，这份排程会把你非常精确地送到一个错误的地方——唯一对冲是 study-log 里的认知差，那是唯一不依赖划分对错的产出。</b>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var K='videoooo-runway-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(K)||'{}') }catch(e){ st={} }
+  var cards=[].slice.call(document.querySelectorAll('.ss'));
+  var bar=document.getElementById('pbar'), num=document.getElementById('pnum');
+  function paint(){
+    var n=0;
+    cards.forEach(function(c){ var on=!!st[c.dataset.k]; c.classList.toggle('done',on); if(on)n++; });
+    bar.style.width=(n/cards.length*100)+'%';
+    num.textContent=n+' / '+cards.length;
+  }
+  cards.forEach(function(c){
+    var t=c.querySelector('.tick');
+    t.setAttribute('role','checkbox'); t.setAttribute('tabindex','0');
+    t.setAttribute('aria-label','标记 '+c.dataset.k+' 为已完成');
+    function tog(e){ e.preventDefault(); e.stopPropagation();
+      st[c.dataset.k]=!st[c.dataset.k];
+      t.setAttribute('aria-checked',String(!!st[c.dataset.k]));
+      try{ localStorage.setItem(K,JSON.stringify(st)) }catch(err){}
+      paint(); }
+    t.addEventListener('click',tog);
+    t.addEventListener('keydown',function(e){ if(e.key===' '||e.key==='Enter') tog(e); });
+    t.setAttribute('aria-checked',String(!!st[c.dataset.k]));
+  });
+  paint();
+})();
+</script>
