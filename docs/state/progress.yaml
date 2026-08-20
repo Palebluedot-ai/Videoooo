@@ -3,9 +3,9 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "L0 · 前期设定 —— 学习期（反推法，不生成一帧）"
+current_phase: "排程 S1 · 定题材（30 分钟硬闸；15 节排程见 notes/07-study-runway.md）"
 current_bottleneck: "无阻塞。能力阶梯已定版（docs/notes/04-capability-ladder.md），L0 可直接开工"
-monitoring_summary: "2026-08-20 参考级文档改写为小白教程 docs/notes/course.html（入门六课，约 3 小时，每课配可跳过练习并写明跳过代价）。术语首次出现均有释义，五段式故意排在最后一课。"
+monitoring_summary: "2026-08-20 会话级排程落定（15 节 / 7 闸 / 判据三档）：3 份候选方案全被证伪后合成。连带修掉校验器 v1 两个静默放行洞（模板副本可过门 / dict 写法跳检查），v2 经 8 fixture 正反验证。"
 
 phases:
   # 路径 v3：能力难度轴（作品驱动 P1-P4 已废——那是生产流程轴，混淆两轴 = 第一个弯路）
@@ -59,6 +59,8 @@ notes: |
   而且学的是「怎么绕开」不是「怎么写更好的 prompt」。
   两份正文：04 能力阶梯（学什么/怎么算过关）+ 05 工业级 SOP（具体怎么做）。
   可打勾版：docs/notes/ladder.html（也已发布为 artifact）
+  ⭐ 排程：notes/07-study-runway.md —— 15 节，S1 定题材是当前动作（30 分钟硬闸）。
+  尺子已修 v2：bash tools/run_fixtures.sh 是每次改动后的回归命令。
   ⭐ 零基础入口：docs/notes/course.html「AI 视频入门六课」——参考文档的教学化改写。
   学习法见 notes/06-how-to-study.md —— 当前是「学习期」，用反推法（输入端学习），不生成。
   第七节给了不训练版的六步，走完即过 L0。

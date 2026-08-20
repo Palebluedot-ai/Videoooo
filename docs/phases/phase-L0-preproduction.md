@@ -29,11 +29,12 @@ disturbance: "本卡不生成任何视频（L1 才生成）；不装 ComfyUI、�
 - [ ] **色标带代码**：Color Palette 每一块标了 HEX，不是只贴色块
 - [ ] **规避方案写下来了**：character-sheet 的「一致性自检」四问全部作答，尤其「有没有在设计层绕开」
 - [ ] **5-Aspect 分镜表 ≥3 个镜头**，其中 ≥1 个标 `hero: true` 且五维全填
-- [ ] **机器校验通过**（这条是硬门）：
+- [ ] **机器校验通过**（这条是硬门，v2 起用 --strict）：
       ```
-      uv run --with pyyaml tools/check_shotlist.py docs/preproduction/shots.yaml
+      uv run --with pyyaml tools/check_shotlist.py --strict docs/preproduction/shots.yaml
+      bash tools/run_fixtures.sh
       ```
-      退出码 0，贴完整输出。hero 镜头不许有 ✗
+      两条都退出码 0，贴完整输出。第二条确认尺子本身没坏（8 个 fixture 全符合预期）
 - [ ] **一帧视频都没生成**（本卡的纪律；生成是 L1 的事）
 
 ## 2. 内联要点
@@ -54,4 +55,5 @@ disturbance: "本卡不生成任何视频（L1 才生成）；不装 ComfyUI、�
 | 2026-08-19 | 2 | 定向调研：五段式方法论 | 见 notes/02 | 方法论落盘 |
 | 2026-08-20 | 3 | deep-research 打能力阶梯 | 107 agent / 验 25 条 | 确认 10 · 否 14；**阶梯不存在**，自建 L0-L6 |
 | 2026-08-20 | 4 | 补 SOP 缺口 | 见 notes/05 | 流水线/分镜/三视图 SOP 落盘 |
-| 2026-08-20 | 5 | L0 工作包 | `uv run --with pyyaml tools/check_shotlist.py templates/shots.example.yaml` | 退出码 0；反向验证故意写错 → 退出码 1 ✓ |
+| 2026-08-20 | 5 | L0 工作包 | check_shotlist v1 | ⚠ 后发现 v1 有两个静默放行洞 |
+| 2026-08-20 | 6 | 修尺子 v2 + 15 节排程 | `bash tools/run_fixtures.sh` | 8/8 符合预期，每条报错指名道姓；排程落 notes/07 |

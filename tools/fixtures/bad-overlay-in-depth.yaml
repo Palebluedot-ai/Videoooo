@@ -1,0 +1,15 @@
+project: fixture 基准
+shots:
+- id: G1
+  hero: true
+  subject: 一只锈迹斑斑的巡逻无人机，单旋翼，机腹挂一盏黄色警示灯。画面里只有它一个主体。
+  subject_motion: 0-2s 悬停，警示灯每秒闪一次；2-5s 缓慢右移半米，旋翼声调随移动略升。交互：无人机↔扬起的灰尘。
+  scene:
+    overlays: []
+    pov: 第三人称客观
+    setting: 塌了一半的立体车库三层
+    time_of_day: 阴天正午，漫射光
+    dynamics: 塑料布在风里持续鼓动
+  spatial_framing: 中景；FG=底部字幕条 / MG=无人机 / BG=天际线
+  camera: 'playback_speed: 正常；lens_distortion: 50mm 无畸变；height: 与主体等高；angle: 平视；focus_dof:
+    f/2.8 浅景深，焦点在警示灯；steadiness: 三脚架静止；movement: 无'

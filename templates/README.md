@@ -22,15 +22,27 @@ cp templates/shots.example.yaml docs/preproduction/shots.yaml
 uv run --with pyyaml tools/check_shotlist.py docs/preproduction/shots.yaml
 ```
 
-## 校验器查什么
+## 校验器查什么（v2）
 
 | 检查 | hero 镜头 | 普通镜头 |
 |---|---|---|
-| 五维（subject / subject_motion / scene / spatial_framing / camera）完整 | ✗ 错误 | ⚠ 警告 |
-| `scene.overlays` 键存在 | ✗ 错误 | ✗ 错误 |
-| overlays 混进 `spatial_framing` 景深轴 | ✗ 错误 | ✗ 错误 |
-| camera 七项书写顺序 | ✗ 错误 | ✗ 错误 |
-| 空泛词（电影感 / 4K / 高细节…） | ⚠ 警告 | ⚠ 警告 |
-| FG / MG / BG 三层齐 | ⚠ 警告 | ⚠ 警告 |
+| 五维完整 | ✗ 错误 | ⚠ 警告 |
+| `scene.overlays` 键存在 | ✗ | ✗ |
+| overlays 混进景深轴（**字符串或字典写法都查**） | ✗ | ✗ |
+| camera 七项书写顺序（**字符串或字典写法都查**） | ✗ | ✗ |
+| **模板残留**（「示例项目」等指纹没换掉） | ✗ | ✗ |
+| **无任何 hero 镜头** | ✗ 整表 | — |
+| 空泛词 / FG-MG-BG 三层 | ⚠ | ⚠ |
 
-反向验证已跑过：故意把 camera 顺序颠倒 + 把字幕塞进景深轴 → 退出码 1，两条都报出来。
+`--strict`：警告也算失败（L0 收口用它）。
+
+**尺子自己的测试**：`tools/fixtures/` 8 个例子（1 好 7 坏，每个坏例子只坏一处、文件名即坏处）。
+
+```
+bash tools/run_fixtures.sh
+```
+
+全部符合预期才退出 0。⚠️ 注意：**示例模板本身会被模板残留检测拦下**——这是特性，抄完必须换成你自己的内容才可能过门。
+
+> v1 有两个静默放行洞（模板逐字副本可全绿过门；camera 写成 YAML 字典时检查整段跳过），
+> 2026-08-20 修复，经 fixtures 正反验证。教训见 `docs/notes/07-study-runway.md` 第零节。
