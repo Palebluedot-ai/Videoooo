@@ -6,6 +6,7 @@ Chao 学习 AI video 的个人学习仓：一边记学习笔记，一边跟着�
 
 | 你想干什么 | 去哪 |
 |---|---|
+| **第一次来 / 零基础** | **[入门六课](docs/notes/course.html)** ← 从这里开始 |
 | 看项目全貌 | 浏览器打开 `dashboard.html` |
 | 看现在在学什么 | `docs/state/progress.yaml` |
 | 看学习笔记 | `docs/notes/` |

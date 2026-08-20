@@ -1,0 +1,671 @@
+<title>AI 视频入门六课</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F4F3F0; --surface:#FFFFFF; --surface-2:#EDECE8;
+  --ink:#1A1A1C; --ink-2:#4E5054; --ink-3:#83868B;
+  --line:#DFDDD8; --line-2:#C6C4BE;
+  --accent:#2F4076; --accent-soft:#E4E7F2;
+  --ex:#8A5A15; --ex-soft:#F7EEDF; --ex-line:#DFC79C;
+  --term:#1F6157; --term-soft:#E2EFEC;
+  --warn:#9B3A31; --warn-soft:#F7E5E3;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --cjk:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#141416; --surface:#1D1E21; --surface-2:#26272B;
+    --ink:#EBEAE8; --ink-2:#AAACB0; --ink-3:#7E8085;
+    --line:#2E3033; --line-2:#3E4145;
+    --accent:#93A6DE; --accent-soft:#1E2436;
+    --ex:#D6A55C; --ex-soft:#2B2418; --ex-line:#4A3D25;
+    --term:#63BCAE; --term-soft:#172B28;
+    --warn:#D4736A; --warn-soft:#2E1D1B;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141416; --surface:#1D1E21; --surface-2:#26272B;
+  --ink:#EBEAE8; --ink-2:#AAACB0; --ink-3:#7E8085;
+  --line:#2E3033; --line-2:#3E4145;
+  --accent:#93A6DE; --accent-soft:#1E2436;
+  --ex:#D6A55C; --ex-soft:#2B2418; --ex-line:#4A3D25;
+  --term:#63BCAE; --term-soft:#172B28;
+  --warn:#D4736A; --warn-soft:#2E1D1B;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--ground);color:var(--ink);font-family:var(--cjk);
+  font-size:17px;line-height:1.82;-webkit-font-smoothing:antialiased;padding:0 20px 90px
+}
+.wrap{max-width:760px;margin:0 auto}
+p{margin:0 0 18px;text-wrap:pretty}
+strong,b{font-weight:700}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+header{padding:70px 0 34px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:20px}
+h1{font-size:clamp(32px,6vw,48px);line-height:1.14;font-weight:700;letter-spacing:-.02em;
+  margin-bottom:20px;text-wrap:balance}
+.sub{font-size:18px;color:var(--ink-2);text-wrap:pretty}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.facts span{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line-2);
+  border-radius:2px;padding:5px 10px;color:var(--ink-3)}
+
+/* toc */
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:22px 24px;margin:34px 0 0}
+.toc h4{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;margin-bottom:14px}
+.toc ol{list-style:none;display:flex;flex-direction:column;gap:9px}
+.toc li{display:grid;grid-template-columns:26px 1fr auto;gap:12px;align-items:baseline;font-size:15px}
+.toc .n{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:600}
+.toc .t{font-family:var(--mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+.toc a{border:0}
+.toc a:hover{border-bottom:1px solid var(--accent)}
+
+/* lesson */
+.lesson{padding:60px 0 10px;border-top:1px solid var(--line);margin-top:50px}
+.lnum{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:10px}
+h2{font-size:29px;line-height:1.24;font-weight:700;letter-spacing:-.016em;margin-bottom:14px;text-wrap:balance}
+.goal{background:var(--accent-soft);border-radius:3px;padding:14px 18px;margin-bottom:26px;
+  font-size:15.5px;line-height:1.65}
+.goal b{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:5px}
+h3{font-size:20px;font-weight:700;margin:36px 0 14px;letter-spacing:-.01em;text-wrap:balance}
+h4{font-size:16.5px;font-weight:700;margin:26px 0 10px}
+
+/* term */
+.term{background:var(--term-soft);color:var(--term);border-radius:2px;padding:1px 5px;
+  font-weight:600;white-space:nowrap}
+.gloss{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--term);
+  border-radius:3px;padding:16px 19px;margin:20px 0}
+.gloss h5{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--term);margin-bottom:10px;font-weight:600}
+.gloss dl{display:flex;flex-direction:column;gap:9px}
+.gloss dt{font-weight:700;font-size:15.5px;display:inline}
+.gloss dd{font-size:15px;color:var(--ink-2);line-height:1.65}
+
+/* exercise */
+.ex{background:var(--ex-soft);border:1px solid var(--ex-line);border-radius:4px;
+  padding:20px 22px;margin:28px 0}
+.ex .hd{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.ex .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ex);color:var(--ground);padding:3px 8px;border-radius:2px;font-weight:600}
+.ex .skip{font-family:var(--mono);font-size:11px;color:var(--ex);border:1px dashed var(--ex-line);
+  padding:2px 8px;border-radius:2px}
+.ex h4{margin:0;font-size:17px;color:var(--ink)}
+.ex p{font-size:15.5px;margin-bottom:12px}
+.ex p:last-child{margin-bottom:0}
+.ex .cost{font-size:14px;color:var(--ink-2);border-top:1px dashed var(--ex-line);padding-top:11px;margin-top:14px}
+.ex .cost b{color:var(--ex)}
+
+/* callouts */
+.note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:3px;padding:15px 18px;margin:22px 0;font-size:15.5px;line-height:1.68}
+.note.w{border-left-color:var(--warn);background:var(--warn-soft)}
+.note b{font-weight:700}
+
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.cmp>div{border-radius:3px;padding:15px 17px;font-size:15px;line-height:1.65}
+.cmp .bad{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 25%,transparent)}
+.cmp .good{background:var(--term-soft);border:1px solid color-mix(in srgb,var(--term) 25%,transparent)}
+.cmp h5{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:8px;font-weight:600}
+.cmp .bad h5{color:var(--warn)} .cmp .good h5{color:var(--term)}
+@media(max-width:600px){.cmp{grid-template-columns:1fr}}
+
+/* five aspects */
+.five{display:flex;flex-direction:column;gap:9px;margin:20px 0}
+.fv{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:3px;padding:15px 18px}
+.fv .h{display:flex;align-items:baseline;gap:10px;margin-bottom:7px}
+.fv .i{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent)}
+.fv .n{font-size:17px;font-weight:700}
+.fv .n em{font-style:normal;font-weight:400;font-size:14px;color:var(--ink-3);margin-left:7px}
+.fv p{font-size:15px;margin:0 0 8px;color:var(--ink-2)}
+.fv p:last-child{margin:0}
+.fv .eg{font-family:var(--mono);font-size:13px;background:var(--surface-2);border-radius:2px;
+  padding:9px 12px;line-height:1.6;color:var(--ink);margin-top:8px}
+
+pre{font-family:var(--mono);font-size:13.5px;line-height:1.65;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:3px;
+  padding:15px 17px;overflow-x:auto;margin:18px 0;white-space:pre-wrap}
+code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);padding:1px 5px;
+  border-radius:2px;border:1px solid var(--line)}
+.scroll{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:460px}
+th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+ul,ol.plain{margin:0 0 18px 22px}
+li{margin-bottom:8px}
+
+.check{background:var(--surface);border:1px dashed var(--line-2);border-radius:3px;
+  padding:17px 20px;margin:30px 0 0}
+.check h5{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:11px;font-weight:600}
+.check ul{margin:0 0 0 20px;font-size:15.5px}
+.check li{margin-bottom:6px}
+
+footer{margin-top:60px;padding-top:34px;border-top:1px solid var(--line);
+  font-size:14.5px;color:var(--ink-3);line-height:1.75}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">Videoooo · 入门教程</div>
+  <h1>AI 视频入门六课</h1>
+  <p class="sub">给完全没接触过的人。<strong>顺序不能换</strong>——这六课的排法本身就是这份教程最重要的内容。每课带一个可跳过的练习，跳过的代价也写清楚了。</p>
+  <div class="facts">
+    <span>约 3 小时读完</span>
+    <span>零基础</span>
+    <span>不需要花钱</span>
+    <span>练习可跳过</span>
+  </div>
+
+  <div class="toc">
+    <h4>六课</h4>
+    <ol>
+      <li><span class="n">01</span><span><a href="#l1">地基：模型哪些事做得好，哪些永远做不好</a></span><span class="t">20 min</span></li>
+      <li><span class="n">02</span><span><a href="#l2">流水线：一部片子从头到尾要过哪 8 关</a></span><span class="t">20 min</span></li>
+      <li><span class="n">03</span><span><a href="#l3">分镜：把一个镜头拆成五个维度 ★</a></span><span class="t">25 min</span></li>
+      <li><span class="n">04</span><span><a href="#l4">设定集：让第二个镜头里还是同一个人</a></span><span class="t">15 min</span></li>
+      <li><span class="n">05</span><span><a href="#l5">地图：七级能力阶梯怎么用</a></span><span class="t">15 min</span></li>
+      <li><span class="n">06</span><span><a href="#l6">五段式：把想清楚的东西翻译给模型</a></span><span class="t">30 min</span></li>
+    </ol>
+  </div>
+</header>
+
+<section class="lesson" style="border-top:0;margin-top:20px;padding-top:36px">
+  <div class="lnum">开课前</div>
+  <h2>三件必须先知道的事</h2>
+
+  <p><strong>AI 视频是什么</strong>：你给模型一段文字（或一张图 + 一段文字），它生成一段几秒钟的视频。你重复这个过程几十上百次，挑出能用的，剪成一部片子。</p>
+
+  <div class="gloss">
+    <h5>先认三个词</h5>
+    <dl>
+      <dt><span class="term">t2v</span></dt><dd>text-to-video，文生视频——只给文字，模型自己想画面。自由但难控。</dd>
+      <dt><span class="term">i2v</span></dt><dd>image-to-video，图生视频——先给一张图当起点，模型让它动起来。<strong>可控得多，是实际生产的主力</strong>。</dd>
+      <dt><span class="term">抽卡</span></dt><dd>同一段文字生成多次，每次结果都不一样，挑一个能用的。这是常态，不是你写得不好。</dd>
+    </dl>
+  </div>
+
+  <h3>事实一：抽卡是常态，而且比你想的多</h3>
+  <p>业内公开的数字：<strong>简单镜头 2–3 次，难镜头 20 次以上</strong>；一个项目的总生成量大约是成片的 <strong>5 到 10 倍</strong>。一部三分钟的片子，可能生成过一千条素材。</p>
+  <p>心理准备到位很重要——很多人第一次抽三次不满意就断定「AI 做不了」，其实那才刚开始。</p>
+
+  <h3>事实二：这个领域<strong>没有教科书</strong></h3>
+  <p>我们做过两轮系统调研，结论明确：<strong>没有任何机构公开发布过 AI 视频的能力判据或学习卡点数据</strong>。七条声称「某某课程给出了能力分解」的说法，在三票独立验证中全部被否掉。</p>
+  <p>这不是说没人在教。是说——<strong>没有权威能告诉你「你现在到哪一级了」</strong>。所以这份教程做了一件事：从学术界的视频质量评估标准里，<strong>反过来构造</strong>出一套判据。哪些是有出处的、哪些是我们推的，文中都标出来了。</p>
+
+  <h3>事实三：模型有些事永远做不好</h3>
+  <p>这是第 1 课的全部内容，也是<strong>这份教程和别的教程最不一样的地方</strong>。多数教程教你「怎么把提示词写得更好」，这份教程会先告诉你：<strong>有些事，提示词写得再好也没用，得绕开。</strong></p>
+
+  <div class="note"><b>这份教程怎么用</b>：从头往下读，别跳。练习可以跳过（每个都标了跳过的代价）。全程<strong>不需要生成任何视频</strong>，也就不花钱——练习用的都是「拿别人的成片当教材」的方法。</div>
+</section>
+
+<!-- ══════════ 第 1 课 ══════════ -->
+<section class="lesson" id="l1">
+  <div class="lnum">第 1 课 · 20 分钟</div>
+  <h2>地基：模型哪些事做得好，哪些永远做不好</h2>
+  <div class="goal"><b>学完你能</b>看着一个创意，判断它会不会撞上模型的软肋——以及撞上了该怎么办。这是全部六课里最省时间的一课。</div>
+
+  <p>先说结论：现在的视频模型，<strong>「看起来像真的」已经基本解决了，「实际上合理」还差得远</strong>。</p>
+  <p>学术界给这两件事起了名字。一个叫<span class="term">表层保真</span>——单帧好不好看、前后帧连不连贯、有没有照着提示词做。基准论文的原话是这方面<strong>「已接近饱和」</strong>。另一个叫<span class="term">内在保真</span>——符不符合物理规律、常识对不对、人体结构正不正确、构图完不完整。这一块还在崩。</p>
+
+  <h3>崩在哪里，有具体数字</h3>
+  <p>下面这组数字来自 VBench-2.0 基准的测评。<strong>看清楚它在说什么</strong>：不是模型整体多少分，是模型<strong>在某一类任务上的成功率</strong>。</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>任务类型</th><th>成功率</th><th>对你意味着</th></tr></thead>
+    <tbody>
+      <tr><td><b>常识 / 物体保持</b><br><span style="font-size:13.5px;color:var(--ink-2)">画面里的东西不会莫名消失</span></td><td><b style="color:var(--term)">92–94%</b></td><td>🟢 模型已经包办，<b>不用你操心</b></td></tr>
+      <tr><td><b>人体解剖</b><br><span style="font-size:13.5px;color:var(--ink-2)">胳膊腿长得对不对</span></td><td><b style="color:var(--term)">86–88%</b></td><td>🟡 大体可以，但手仍是经典重灾区</td></tr>
+      <tr><td><b>动态空间关系</b><br><span style="font-size:13.5px;color:var(--ink-2)">两个人边走边换位置</span></td><td><b style="color:var(--warn)">19–21%</b></td><td>🔴 <b>崩</b></td></tr>
+      <tr><td><b>动态属性变化</b><br><span style="font-size:13.5px;color:var(--ink-2)">边走边变色、逐渐融化</span></td><td><b style="color:var(--warn)">8–24%</b></td><td>🔴 <b>崩</b></td></tr>
+      <tr><td><b>复杂情节</b><br><span style="font-size:13.5px;color:var(--ink-2)">一个镜头里发生好几件事</span></td><td><b style="color:var(--warn)">9–11%</b></td><td>🔴 <b>崩得最狠</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note w"><b>数字的年份要看清</b>：这批数字对应 2025 年 3 月那一代模型。<b>不能当作今天某个具体模型的分数用</b>。它的价值在于告诉你<b>哪一类任务本质上难</b>——这个结论比具体数值稳定得多。</div>
+
+  <h3>这张表怎么决定了学习顺序</h3>
+  <p>把它反过来读，学习路线就自己出来了：</p>
+  <div class="cmp">
+    <div class="good"><h5>模型已经做好的</h5>单帧美感、前后连贯、基本照做、常识、物体保持——<strong>别在这上面花时间</strong>。这些是模型送你的。</div>
+    <div class="bad"><h5>模型做不好的</h5>动态空间关系、复杂情节、动态属性变化——<strong>这才是你的手艺所在</strong>。</div>
+  </div>
+
+  <p>但关键的一步在这里：<strong>模型做不好的那些，你的手艺不是「把提示词写得更好」，是「改设计绕开它」。</strong></p>
+  <p>成功率 9%–21% 意味着什么？意味着<strong>换谁来写这条提示词，结果都差不多</strong>。这不是表达能力问题，是模型能力边界问题。硬扛就是拿几十次抽卡去赌一个 10% 的事件。</p>
+
+  <div class="note"><b>一个真实例子</b>：有部叫《丧尸清道夫》的 AI 短片火过——三分半、十天、三千块。它的主角是个机器人，脸是一块像素表情屏。<br><br>这不是美术偏好。<strong>真人脸在多个镜头之间会变形走样</strong>（人体解剖 86–88%，而且脸是最敏感的部分）。作者把「人脸一致性」这个难题，用一个<strong>设计决定</strong>直接绕过去了——机器人 + 像素屏，天然稳定。<br><br>这就是「改设计绕开」的样子。它值 20 次抽卡都换不来的效果。</div>
+
+  <div class="ex">
+    <div class="hd"><span class="tag">练习 1</span><span class="skip">可跳过</span></div>
+    <h4>给三个创意做「崩溃维度体检」</h4>
+    <p>随便想三个你想做的视频创意，每个写一句话。然后对着上面那张表，逐个问：</p>
+    <ul>
+      <li>它需要<strong>多个主体相对位置发生变化</strong>吗？（→ 动态空间关系，19–21%）</li>
+      <li>它需要<strong>什么东西在过程中变形/变色/融化</strong>吗？（→ 动态属性变化，8–24%）</li>
+      <li>它需要<strong>一个镜头里发生好几件事</strong>吗？（→ 复杂情节，9–11%）</li>
+      <li>画面里有<strong>真人脸</strong>吗？有<strong>手部特写</strong>吗？</li>
+    </ul>
+    <p>每命中一条，写一个绕开的办法。比如「两人对话走位」→ 改成静止对峙，或改成单人加画外音。</p>
+    <p class="cost"><b>跳过的代价：</b>你会在第一次真正开始做的时候，把二三十次抽卡浪费在一个模型本来就做不到的镜头上，然后怀疑自己提示词写得不好。这个练习十分钟，能省掉那两小时。</p>
+  </div>
+
+  <div class="check">
+    <h5>自查</h5>
+    <ul>
+      <li>说得出「表层保真」和「内在保真」的区别吗？</li>
+      <li>说得出三个模型做不好的任务类型吗？</li>
+      <li>遇到模型做不好的维度，第一反应是「改提示词」还是「改设计」？</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ 第 2 课 ══════════ -->
+<section class="lesson" id="l2">
+  <div class="lnum">第 2 课 · 20 分钟</div>
+  <h2>流水线：一部片子从头到尾要过哪 8 关</h2>
+  <div class="goal"><b>学完你能</b>在任何时刻说清「我现在在第几关、这一关的交付物是什么」。新手最常见的混乱就是所有事情一起做。</div>
+
+  <p>下面这条流水线来自一个 4.8 万星的开源项目 <code>OpenMontage</code>，它把 AI 视频制作编码成了 8 个阶段、10 个「导演」角色。这不是理论模型，是一套跑得起来的工程实现。</p>
+
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>阶段</th><th>交付什么</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>research</b> 调研</td><td>调研简报。后面所有事实性说法都要能追溯到它</td></tr>
+      <tr><td>2</td><td><b>proposal</b> 方案 ⏸</td><td>交付承诺 + 锁定渲染路线。<b>第一道人工闸</b></td></tr>
+      <tr><td>3</td><td><b>script</b> 剧本</td><td>节拍表（第 3 课讲）</td></tr>
+      <tr><td>4</td><td><b>scene_plan</b> 分镜</td><td>分镜表 + 标出哪几个是重点镜头</td></tr>
+      <tr><td>5</td><td><b>assets</b> 资产 ⏸</td><td>素材。<b>第二道人工闸：先出样，再批量</b></td></tr>
+      <tr><td>6</td><td><b>edit</b> 剪辑</td><td>剪辑决策</td></tr>
+      <tr><td>7</td><td><b>compose</b> 合成</td><td>调色、混音、字幕</td></tr>
+      <tr><td>8</td><td><b>publish</b> 交付</td><td>成片</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>四条硬限制（防止无限返工）</h3>
+  <p>这套流水线给自己上了刹车：<strong>每个阶段最多返工 3 次</strong>、<strong>每对相邻阶段最多回退 1 次</strong>、<strong>全流程最多回退 3 次</strong>、<strong>单次运行墙钟上限 12 分钟</strong>、<strong>预算用到 90% 报警</strong>。</p>
+  <p>对新手最有用的是前三条：<strong>返工三次还不行，说明问题在上一个阶段，往回退一格，而不是在原地继续磨。</strong></p>
+
+  <h3>一条值得记一辈子的规则</h3>
+  <div class="note w"><b>静默降级禁令</b>——原文：<br><i>"If Remotion or clip generation breaks a motion-led brief, <b>stop and bubble the issue to the user instead of quietly switching mediums.</b>"</i><br><br>翻译：<strong>说好了要动态视频，结果生成不出来，那就停下来上报，不许偷偷换成静帧加缓慢推拉糊弄过去。</strong><br><br>这条听着像是给 AI 定的规矩，其实是给你自己定的。做不到就说做不到——技术上做不到不丢人，假装做到了才是。</div>
+
+  <h3>两道人工闸在哪，为什么在那</h3>
+  <p><strong>第一道在方案之后</strong>：因为方案错了，后面全白做。<br>
+  <strong>第二道在批量生成之前</strong>：规则原文是「批量生成之前，<strong>每一种昂贵的生成类型先出一个样本给人看</strong>」。</p>
+  <p>第二道闸就是省钱的地方。先出一条看看，再决定要不要跑二十条。</p>
+
+  <div class="ex">
+    <div class="hd"><span class="tag">练习 2</span><span class="skip">可跳过</span></div>
+    <h4>给你最近看过的一条短视频倒推流水线</h4>
+    <p>挑一条你喜欢的短视频（不一定是 AI 做的），对着上面 8 个阶段，猜：</p>
+    <ul>
+      <li>它的<strong>调研</strong>阶段可能查了什么？</li>
+      <li>它的<strong>分镜</strong>大概有几个镜头？哪一个是重点镜头？</li>
+      <li>它的<strong>合成</strong>阶段做了什么？（调色偏冷还是暖？有没有字幕？音乐在哪几秒进来？）</li>
+    </ul>
+    <p class="cost"><b>跳过的代价：</b>不大。这一课的核心是「知道有 8 个阶段」，练习只是加深印象。<b>但如果你连一条片子的镜头数都数不出来，建议做一下</b>——那说明你还没有养成「把片子拆开看」的习惯，那个习惯是第 3 课的基础。</p>
+  </div>
+
+  <div class="check">
+    <h5>自查</h5>
+    <ul>
+      <li>8 个阶段说得出至少 6 个吗？</li>
+      <li>两道人工闸分别在哪一步、防的是什么？</li>
+      <li>返工三次还不行，该怎么办？</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ 第 3 课 ══════════ -->
+<section class="lesson" id="l3">
+  <div class="lnum">第 3 课 · 25 分钟 · 核心</div>
+  <h2>分镜：把一个镜头拆成五个维度</h2>
+  <div class="goal"><b>学完你能</b>把「我想要一个很酷的镜头」变成一份五个维度写全的、别人照着能做出来的规格。<strong>这是整份教程最核心的一课。</strong></div>
+
+  <p><span class="term">分镜</span>是什么：把一场戏拆成一个个镜头，每个镜头写清楚拍什么、怎么拍。传统上是画出来的，AI 视频里更多是<strong>写</strong>出来的。</p>
+
+  <div class="gloss">
+    <h5>先认几个摄影词（不认识这些，后面读不懂）</h5>
+    <dl>
+      <dt><span class="term">景别</span></dt><dd>镜头离主体多远。从远到近：大全景 → 全景 → 中景 → 近景 → 特写 → 大特写。</dd>
+      <dt><span class="term">运镜</span></dt><dd>摄影机怎么动。推（往前）、拉（往后）、摇（原地转）、移（平移）、跟（跟着主体）、环绕。</dd>
+      <dt><span class="term">景深</span></dt><dd>画面里有多少东西是清楚的。浅景深＝只有主体清楚背景糊掉；深景深＝前后都清楚。<br>画面在纵深上分三层：<code>FG</code> 前景 / <code>MG</code> 中景 / <code>BG</code> 背景。</dd>
+      <dt><span class="term">POV</span></dt><dd>视点。第三人称客观视角，还是「从主角眼睛里看出去」。</dd>
+      <dt><span class="term">overlay</span></dt><dd>叠加在画面上的东西：字幕、标题卡、Logo、图形。<strong>注意它不属于画面里的景深层次</strong>——这一点后面是硬规则。</dd>
+    </dl>
+  </div>
+
+  <h3>5-Aspect：每个镜头必须写全的五个维度</h3>
+  <p>这套规范同样来自 <code>OpenMontage</code> 的分镜导演角色文件。规则是：<strong>每一个节拍——尤其是重点镜头——五个维度必须全部写明。</strong></p>
+
+  <div class="five">
+    <div class="fv"><div class="h"><span class="i">1</span><span class="n">Subject<em>主体</em></span></div>
+      <p>画面里的主角是什么，长什么样。<strong>如果有多个主体，必须写清怎么区分它们</strong>——不然模型会把两个人画成一个样。</p>
+      <div class="eg">✗ 一个机器人<br>✓ 单个机器人清道夫。哑光深灰金属外壳，胸口一块 8×8 像素表情屏，左肩有一道未修补的凹陷。画面里只有它一个主体。</div>
+    </div>
+    <div class="fv"><div class="h"><span class="i">2</span><span class="n">Subject Motion<em>主体运动</em></span></div>
+      <p><strong>按时间顺序</strong>写动作，还要写清主体和物体、主体和主体之间的交互。</p>
+      <div class="eg">✗ 机器人抬起手<br>✓ 0–2s 静止，像素屏两点缓慢明灭一次；2–4s 缓慢抬起右臂，关节有一次 0.1 秒的应激微颤；4–6s 手掌张开，掌心尘埃被气流带起。</div>
+    </div>
+    <div class="fv"><div class="h"><span class="i">3</span><span class="n">Scene<em>场景</em></span></div>
+      <p>叠加元素（<strong>单独列！</strong>）+ 视点 + 环境 + 时间 + 场景动态。</p>
+      <div class="eg">overlays: 无<br>pov: 第三人称客观<br>setting: 废弃地铁站台，瓷砖剥落，积水反光<br>time_of_day: 无自然光，仅应急灯（顶部偏右）<br>dynamics: 空气中持续飘浮的细尘；远处灯管间歇闪烁</div>
+    </div>
+    <div class="fv"><div class="h"><span class="i">4</span><span class="n">Spatial Framing<em>空间构图</em></span></div>
+      <p>景别 + 主体在画面里的位置 + <strong>前中后景三层</strong> + 机位相对主体的高度。</p>
+      <div class="eg">中近景（腰部以上）；主体居左三分线；<br>FG＝飘浮尘埃 / MG＝机器人 / BG＝虚化的站台立柱与应急灯；<br>机位低于主体胸口约 20cm</div>
+    </div>
+    <div class="fv"><div class="h"><span class="i">5</span><span class="n">Camera<em>相机</em></span></div>
+      <p><strong>这一维的书写顺序被规定死了</strong>，七项，一项都不能乱：</p>
+      <div class="eg">playback speed 播放速度 → lens distortion 镜头畸变 → height 机位高度 → angle 角度 → focus/DoF 对焦与景深 → steadiness 稳定度 → movement 运动</div>
+      <p style="margin-top:10px">为什么规定顺序？因为这是<strong>从「机器怎么架的」到「机器怎么动的」</strong>的物理顺序。乱序写，模型容易把「镜头在动」和「主体在动」搞混——那正是最常见的失败。</p>
+    </div>
+  </div>
+
+  <h3>三条硬规则</h3>
+
+  <h4>规则一：叠加元素不进景深轴</h4>
+  <p>原文：叠加元素 <i>"NOT part of the scene's foreground/midground/background depth axis. List them separately in scene metadata."</i></p>
+  <div class="cmp">
+    <div class="bad"><h5>✗ 错</h5>spatial_framing: 中景，<b>FG＝字幕条</b> / MG＝人物 / BG＝街景</div>
+    <div class="good"><h5>✓ 对</h5>scene.overlays: [底部字幕条]<br>spatial_framing: 中景，FG＝落叶 / MG＝人物 / BG＝街景</div>
+  </div>
+  <p>把字幕写进景深层次，<strong>模型会试着把字幕当成场景里的一个实物去渲染</strong>——你会得到一个飘在空中的、有厚度和阴影的、扭曲的文字块。</p>
+
+  <h4>规则二：重点镜头不许含糊</h4>
+  <div class="note w">原文，值得贴在墙上：<br><b>"Vague hero-frame specs are the single most common failure mode."</b><br><br>重点镜头的规格写得含糊，是<b>最常见的单一失败原因</b>。不是「模型不行」，是「你没说清」。</div>
+
+  <h4>规则三：转场要克制</h4>
+  <p>只用一小组：硬切、淡入淡出、叠化、克制的推进。<strong>新手最容易在转场上炫技，而炫技的转场是廉价感的头号来源。</strong></p>
+
+  <h3>不要写「电影感」「4K」「高细节」</h3>
+  <p>这类词 AI 锚不住——它不知道你说的电影感是哪一种。<strong>写具体的器材型号</strong>：</p>
+  <div class="cmp">
+    <div class="bad"><h5>✗ 锚不住</h5>电影感、4K、高细节、超清、大片感、精美</div>
+    <div class="good"><h5>✓ 锚得住</h5>IMAX 胶片摄影机 + Panavision C 系列镜头（35mm，f4）<br>索尼威尼斯电影机 + 佳能 K-35 系列镜头</div>
+  </div>
+  <p>器材型号背后是一整套真实存在的光学特性——畸变、色彩、虚化形状。模型在训练数据里见过这些词和对应的画面。「电影感」它没见过。</p>
+
+  <div class="ex">
+    <div class="hd"><span class="tag">练习 3</span><span class="skip">可跳过</span><span class="skip" style="border-color:var(--ex);color:var(--ex)">最推荐做的一个</span></div>
+    <h4>反推法：拿别人的成片当教材</h4>
+    <p>这是<strong>不生成一帧视频</strong>就能练真本事的方法，也是这份教程最推荐的练法。</p>
+    <pre>挑一个成片镜头（5–15 秒）
+  → 对着五个维度，反推它的分镜表怎么写
+  → 跟原片对照：我推的，和它实际呈现的，差在哪</pre>
+    <p><strong>为什么有效</strong>：不花钱、没有抽卡的随机性干扰你判断、<strong>而且有标准答案</strong>——原片就在那儿，你推错了一眼看得出。</p>
+    <p><strong>三个难度梯度，从易开始</strong>：</p>
+    <ul>
+      <li><strong>易</strong>：静止镜头，或只有一种运镜</li>
+      <li><strong>中</strong>：主体在动 + 镜头也在动。<strong>这里最常推错——分不清是人在走还是镜头在跟</strong></li>
+      <li><strong>难</strong>：多个主体 + 景深变化 + 有字幕叠加</li>
+    </ul>
+    <p class="cost"><b>跳过的代价：</b><b>大。</b>这是六个练习里唯一强烈建议做的。五个维度你读一遍能懂，但「懂」和「能写出来」之间隔着五到十个镜头的反推量。不练的话，第一次真上手会发现自己每一维都写得像上面那些 ✗ 的例子。</p>
+  </div>
+
+  <div class="check">
+    <h5>自查</h5>
+    <ul>
+      <li>五个维度背得出来吗？</li>
+      <li>相机那七项的顺序背得出来吗？</li>
+      <li>字幕应该写在哪一维里？</li>
+      <li>「电影感」为什么不好用？</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ 第 4 课 ══════════ -->
+<section class="lesson" id="l4">
+  <div class="lnum">第 4 课 · 15 分钟</div>
+  <h2>设定集：让第二个镜头里还是同一个人</h2>
+  <div class="goal"><b>学完你能</b>把「角色一致性」从反复调提示词碰运气，变成一件事先做好、之后一直用的资产。</div>
+
+  <p>新手做多镜头片子，撞的第一堵墙一定是这个：<strong>第一个镜头里的人，到第二个镜头就变了个样。</strong></p>
+  <p>传统动画产业早就解决了这个问题，办法是<span class="term">设定集</span>（character sheet）——开拍前把角色画死，之后所有人照着它做。这不是画着好看，<strong>它是一份沟通契约</strong>。</p>
+
+  <h3>完整设定集六件套</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>件</th><th>是什么</th></tr></thead>
+    <tbody>
+      <tr><td><b>Turnaround 三视图</b></td><td>角色转一圈的多角度图。<b>标准五视图：正面 / 3⁄4 前 / 侧面 / 3⁄4 后 / 背面</b></td></tr>
+      <tr><td><b>Expression Sheet</b></td><td>表情表：喜怒哀惊惧，加上本片特有的</td></tr>
+      <tr><td><b>Pose Sheet</b></td><td>姿态表：T 字站姿、关键动作、剪影视图（剪影认得出＝设计立住了）</td></tr>
+      <tr><td><b>Props</b></td><td>道具</td></tr>
+      <tr><td><b>Color Palette</b></td><td>色彩方案。<b>每一块必须标代码</b>（HEX / RGB / Pantone），不许只贴色块</td></tr>
+      <tr><td><b>Annotations</b></td><td>注释：比例关系、独特特征、<b>哪些细节绝不能被美化掉</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>AI 时代怎么做三视图</h3>
+  <p>不用会画画。拿一张角色参考图，用这条提示词：</p>
+  <pre>Create a four-panel turnaround for this man to show his frontal,
+his right side, his left side and his back, in a white and grey background.</pre>
+  <p>三个要点：</p>
+  <ul>
+    <li><strong><code>turnaround</code> 这个词不能换。</strong>它是行业标准术语，模型在训练数据里认得它。换成「多角度图」效果会差</li>
+    <li><strong>每一个视图都明确列出来</strong>，别指望模型自己补全</li>
+    <li><strong>白灰背景</strong>——后续抠图、当参考图都方便</li>
+  </ul>
+
+  <div class="note"><b>为什么这是一致性的真正解法</b><br>很多教程会告诉你「用参考图」。但<strong>喂哪种参考图，差别巨大</strong>：<br><br>一张正面照，只锁住了正面。模型转到侧面时，那半张脸是它自己编的。<br><strong>一套三视图，锁的是 360 度。</strong><br><br>这就是「角色一致性」从玄学变成工程的地方——不是反复求模型别变脸，是<strong>先把设定集做出来当契约</strong>。</div>
+
+  <div class="note w" style="border-left-color:var(--ex);background:var(--ex-soft)"><b>诚实标注</b>：「三视图优于单张参考图」这个判断，逻辑上成立（锁 360 度 vs 锁一个面），但我们<b>没有找到直接的实证研究</b>。这是你以后可以亲手验证的第一件事——同一个角色，一次喂正面照、一次喂三视图，各生成五个镜头，比一比。</div>
+
+  <div class="ex">
+    <div class="hd"><span class="tag">练习 4</span><span class="skip">可跳过</span></div>
+    <h4>给一个已有角色补设定集</h4>
+    <p>不用自己设计角色。挑一个你熟悉的动画角色，凭记忆填一份设定集的<strong>文字部分</strong>（不用画）：</p>
+    <ul>
+      <li>色彩方案：主要三个颜色，各是什么？（能说出大致色号更好）</li>
+      <li>注释：<strong>哪三个细节是「这个角色之所以是这个角色」的关键？</strong></li>
+      <li>剪影测试：只看黑色剪影，你认得出他吗？为什么？</li>
+    </ul>
+    <p class="cost"><b>跳过的代价：</b>中等。你会知道设定集有六件套，但不会有「原来一个角色的辨识度是靠这三个细节撑住的」这种体感——而那个体感直接决定你写主体描述时抓不抓得住重点。</p>
+  </div>
+
+  <div class="check">
+    <h5>自查</h5>
+    <ul>
+      <li>三视图的五个标准角度是哪五个？</li>
+      <li>色彩方案为什么必须标代码而不能只贴色块？</li>
+      <li>为什么三视图比单张正面照更能锁住一致性？</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ 第 5 课 ══════════ -->
+<section class="lesson" id="l5">
+  <div class="lnum">第 5 课 · 15 分钟</div>
+  <h2>地图：七级能力阶梯怎么用</h2>
+  <div class="goal"><b>学完你能</b>随时定位自己在哪一级、下一级要练什么。<strong>这一课当地图查，不用背。</strong></div>
+
+  <div class="note"><b>先声明</b>：这套阶梯是<b>构造出来的</b>，不是哪个权威发布的——因为如开课前所说，<b>公开资料里根本不存在这样一份阶梯</b>。它的地基（第 1 课那张表）有出处，编排是推的。你可以推翻任何一级。</div>
+
+  <h3>先分清两条完全不同的轴</h3>
+  <div class="cmp">
+    <div class="good"><h5>生产流程轴</h5>做一部片<strong>按什么顺序做</strong>：调研 → 方案 → 剧本 → 分镜 → 资产 → 剪辑 → 合成 → 交付。<br><br>就是第 2 课那条流水线。</div>
+    <div class="bad"><h5>能力难度轴</h5><strong>先练什么后练什么</strong>。<br><br>就是下面这七级。</div>
+  </div>
+  <p><strong>混淆这两条是新手最大的弯路。</strong>按生产流程学，你第一天就要同时面对分镜、生成、调色、混音——每一样都不会，每一样都在拖后腿。按能力难度学，一次只练一件事。</p>
+
+  <h3>七级</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>级</th><th>练什么</th><th>怎么算过关</th></tr></thead>
+    <tbody>
+      <tr><td><b>L0</b></td><td><b>前期设定</b>——做三视图 + 五维分镜表</td><td>交出一套三视图（带色号）和一张五维写全的分镜表</td></tr>
+      <tr><td><b>L1</b></td><td><b>单镜头出片</b>——生成一条能看的</td><td>一条 5–10 秒片段，12 项破绽检查全过</td></tr>
+      <tr><td><b>L2</b> ★</td><td><b>规避设计</b>——遇到模型软肋会绕</td><td>给任一崩溃维度，能提出 ≥2 种绕开方案。<b>这是分水岭</b></td></tr>
+      <tr><td><b>L3</b></td><td><b>一致性工程</b>——多镜头同一个人</td><td>3+ 镜头里同一角色，人眼一眼认得出</td></tr>
+      <tr><td><b>L4</b></td><td><b>管线与批量</b>——写代码自动化</td><td>一条命令从分镜表跑到粗剪成片</td></tr>
+      <tr><td><b>L5</b></td><td><b>自动筛选</b>——让机器帮你挑片</td><td>机器排的前三名里，≥1 条是你人眼也会选的</td></tr>
+      <tr><td><b>L6</b></td><td><b>非视觉</b>——剪辑节奏 / 调色 / 声音 / 叙事</td><td>学术界还没给出可测量的分解，<b>只能回传统影视教材</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>三条使用说明</h3>
+  <p><strong>一、L2 是真正的分水岭。</strong>L0 和 L1 是手上功夫，L2 是脑子里的转变——从「我要让模型做到」变成「我要让这件事不需要模型做到」。过不了 L2，你会在 L3 之后每一级都被同一堵墙挡住。</p>
+  <p><strong>二、L4 是编程能力的入口。</strong>一部三分钟的片子约 200 个镜头，乘以 5–10 倍生成量＝一千多个文件要管。这是工程问题，不是创作问题。<strong>这也是 Claude Code、Cursor 这类编程助手真正的主场</strong>——它们帮不了你决定哪条好看，但能把你手工点二十次的事变成一条命令。</p>
+  <p><strong>三、L5 是全网空白。</strong>调研确认：批量生成后的自动打分筛选，<strong>没有找到任何可引用的公开实现</strong>。这意味着没有现成方案可抄，也意味着这可能是最有价值的自研点。</p>
+
+  <div class="note w"><b>L5 最容易踩的坑（提前告诉你）</b><br>学术界有现成的视频质量评分基准（VBench 等），看起来正好拿来筛片。<b>但那是给「模型」排名的，不是给「镜头」打分的</b>——拿它筛你今天抽的二十条，是超出设计用途的外推。<br><br>更要小心 FVD 这类指标：它是<b>分布级</b>的，对单条视频<b>根本没有定义</b>。不是「不准」，是「用错了范畴」。</div>
+
+  <div class="ex">
+    <div class="hd"><span class="tag">练习 5</span><span class="skip">可跳过</span></div>
+    <h4>给自己定位</h4>
+    <p>对着七级的「怎么算过关」，诚实地问自己现在能交出哪些。大多数人读完这份教程会停在 <strong>L0 未过</strong>——这很正常，L0 的判据是要交出东西的。</p>
+    <p>然后写一句：<strong>「我下一步要做的最小的一件事是 ____」</strong>。注意是最小的一件，不是一个阶段。</p>
+    <p class="cost"><b>跳过的代价：</b>小。但不定位的人往往会在两周后发现自己什么都学了一点、什么都没过关。</p>
+  </div>
+</section>
+
+<!-- ══════════ 第 6 课 ══════════ -->
+<section class="lesson" id="l6">
+  <div class="lnum">第 6 课 · 30 分钟</div>
+  <h2>五段式：把想清楚的东西翻译给模型</h2>
+  <div class="goal"><b>学完你能</b>写出一条结构完整、模型能稳定理解的提示词。<strong>注意这一课在最后，这个位置是故意的。</strong></div>
+
+  <div class="note w"><b>为什么五段式放在最后</b><br>它是<b>表达层</b>——把你已经想清楚的东西翻译给模型。第 3 课的五维分镜是<b>规划层</b>——想清楚这个镜头到底是什么。<br><br><b>先学五段式，你会把表达层当成规划层</b>：以为把提示词写漂亮就等于想清楚了。结果是提示词很华丽，镜头很空洞。<br><br>这是这份教程整个排序逻辑里最重要的一处。</div>
+
+  <p>下面这套结构来自《丧尸清道夫》作者 Mx-Shell 公开的方法论。<strong>顺序不能乱。</strong></p>
+
+  <h3>五段</h3>
+
+  <h4>① 核心主题 —— 一行风格标签</h4>
+  <p>3–6 个标签，用 <code>|</code> 分隔，从画面类型 → 题材 → 美学风格层层递进。</p>
+  <pre>原子朋克 | 末日丧尸 | 电影级质感 | 超写实 | 杜绝游戏CG感</pre>
+  <p>注意最后一个标签常常是<strong>否定式</strong>——先划掉你不要的，比堆砌你要的更有效。</p>
+
+  <h4>② 人物与基础设定 —— 三行</h4>
+  <ul>
+    <li><strong>面部</strong>：<code>参照上传图片，五官、脸型、发型百分百还原，杜绝美化</code></li>
+    <li><strong>服装</strong>：强调<strong>质地</strong>——<code>哑光黑色皮质长风衣，金属腰带为哑光质地</code></li>
+    <li><strong>场景</strong>：写<strong>动态</strong>环境，不是静态背景</li>
+  </ul>
+
+  <h4>③ 氛围与画质 —— 写器材型号</h4>
+  <p>就是第 3 课那条规则：别写「电影感」，写 <code>IMAX胶片摄影机，搭配Panavision C系列镜头（焦段35mm，光圈f4）</code>。</p>
+
+  <h4>④ 运镜规则 —— 三行</h4>
+  <ul>
+    <li><strong>单镜头设定</strong>：一镜到底，还是多镜头</li>
+    <li><strong>角度</strong>：开场什么角度，怎么变化</li>
+    <li><strong>呼吸感（必备行）</strong>：<code>手持拍摄，全程保持极其轻微的、如呼吸般的镜头浮动，增强临场感</code></li>
+  </ul>
+  <div class="note">这条「呼吸感」不是文学修饰，是<strong>反破绽</strong>手段。AI 生成的运动往往<strong>过于顺滑</strong>——像飞行模拟器一样线性稳定，缺少真实手持的微小抖动。这一行就是专门治它的。</div>
+
+  <h4>⑤ 分镜（时间轴）—— 按秒或按镜切片</h4>
+  <p>按秒切片时，每一段三件套：<strong>动作 + 镜头 + 特效</strong>。</p>
+  <pre>0-3秒 · 蓄势
+动作：主角略微低头，目光锁定腰带，脊背紧绷
+镜头：极缓向前推进，捕捉身体因呼吸产生的微幅起伏
+特效：整颗眼球骤然亮起白金色光芒，眼眶周围皲裂</pre>
+  <p>还有一行<strong>必备的声音行</strong>：<code>声音：无配乐，仅保留现场同期声</code>。</p>
+
+  <h3>三条反直觉原则</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>原则</th><th>为什么</th></tr></thead>
+    <tbody>
+      <tr><td><b>图片质量不高就别喂参考图</b></td><td>AI 会模仿<b>画风</b>，而不是模仿<b>设计</b>。一张糊图会把糊传染给整个镜头</td></tr>
+      <tr><td><b>描述缺陷 ＝ 描述真实</b></td><td>每段落至少两处瑕疵。<code>保留轻微面部瑕疵</code>、<code>面部伤口，纱布，血渍保持一致</code>、<b><code>杜绝美化</code> 要写死</b>——真实感来自瑕疵，AI 的默认倾向是把一切磨皮</td></tr>
+      <tr><td><b>抽卡是常态</b></td><td>同样的提示词生成两次也会显著不同。别指望一次成型</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>交片前的 12 项破绽检查</h3>
+  <p>这是<strong>贯穿全程的验收清单</strong>，从 L1 开始每一级交付都过一遍。前四条是最常见的：</p>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>破绽</th><th>怎么查</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>手部变形</b></td><td>暂停数手指——4 根、6 根，或帧间数量变化</td></tr>
+      <tr><td>2</td><td><b>切镜后背景物理不一致</b></td><td>云的位置、阴影、光的方向，在两个镜头之间守恒吗</td></tr>
+      <tr><td>3</td><td><b>平板恐怖谷打光</b></td><td>是不是每个环境都是「晴朗午后」的扩散光、没有硬阴影</td></tr>
+      <tr><td>4</td><td><b>过饱和合成色</b></td><td>草太绿、肤色偏橙、天空均匀饱和没有渐变</td></tr>
+      <tr><td>5</td><td><b>运动过于顺滑</b></td><td>像飞行模拟器一样线性稳定（→ 用「呼吸感」行治）</td></tr>
+      <tr><td>6</td><td><b>口型音画不同步</b></td><td>看 p / b / m 这类双唇音时，嘴有没有闭合</td></tr>
+      <tr><td>7</td><td><b>镜面反射崩坏</b></td><td>反射物错位、角度错、直接消失（→ 画面里别放镜子）</td></tr>
+      <tr><td>8</td><td><b>画面内文字变乱码</b></td><td>路牌、书封是否帧间一致可读（→ 场景里最小化文字）</td></tr>
+      <tr><td>9</td><td><b>背景群演单腿走路</b></td><td>步态是不是真的左-右-左</td></tr>
+      <tr><td>10</td><td><b>纹理重复平铺</b></td><td>草地、砖墙有没有可见的重复色块</td></tr>
+      <tr><td>11</td><td><b>克隆声没有呼吸</b></td><td>真人每 5–10 秒换气一次，AI 常常不换</td></tr>
+      <tr><td>12</td><td><b>配音平台调</b></td><td>有没有重音起伏、列举时加速、该停顿处停顿</td></tr>
+    </tbody>
+  </table></div>
+  <p>注意 1、2、7、9 全部落在第 1 课说的<strong>内在保真</strong>那一侧（物理、解剖——模型崩的地方），3、4、5 落在<strong>表层保真</strong>一侧（后期能修）。<strong>两套框架对得上，互为印证。</strong></p>
+
+  <div class="ex">
+    <div class="hd"><span class="tag">练习 6</span><span class="skip">可跳过</span></div>
+    <h4>把练习 3 的反推结果翻译成五段式</h4>
+    <p>如果你做了练习 3（反推分镜），现在把其中一个镜头的五维分镜，<strong>翻译</strong>成一条完整的五段式提示词。</p>
+    <p>翻译时你会发现一个有意思的现象：<strong>五维里想清楚的东西，翻译起来很顺；没想清楚的地方，翻译时会卡住。</strong>卡住的地方就是你规划层的漏洞。</p>
+    <p>检查：五段齐全吗？第③段有具体器材型号吗？第④段有呼吸感行吗？第⑤段有声音行吗？</p>
+    <p class="cost"><b>跳过的代价：</b>中等偏大。这个练习是<b>把两课打通</b>的地方——不做的话，规划层和表达层在你脑子里会一直是两件不相干的事。</p>
+  </div>
+
+  <div class="check">
+    <h5>自查</h5>
+    <ul>
+      <li>五段的顺序说得出吗？</li>
+      <li>为什么第一段最后常常是个否定式标签？</li>
+      <li>「呼吸感」那一行治的是 12 项破绽里的第几条？</li>
+      <li>为什么要主动写「瑕疵」？</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════ 结课 ══════════ -->
+<section class="lesson">
+  <div class="lnum">结课</div>
+  <h2>你现在在哪，接下来做什么</h2>
+
+  <p>读完这六课，你已经有了<strong>大多数入门者没有的三样东西</strong>：</p>
+  <ul>
+    <li>知道模型<strong>哪些事永远做不好</strong>，以及遇到时该绕不该扛</li>
+    <li>知道分镜有<strong>可执行的规格</strong>，不是「写得越详细越好」这种废话</li>
+    <li>知道角色一致性是<strong>前期资产问题</strong>，不是提示词问题</li>
+  </ul>
+
+  <h3>下一步的最小动作</h3>
+  <p>不要一次做完。挑<strong>一个</strong>：</p>
+  <ol class="plain">
+    <li><strong>做练习 3</strong>（反推一个镜头）—— 如果你只做一件事，做这个</li>
+    <li><strong>建一份学习台账</strong>，每学一轮记一行「我原以为 X，实际是 Y」</li>
+    <li><strong>给一个创意做崩溃维度体检</strong>（练习 1）</li>
+  </ol>
+
+  <div class="note"><b>关于「我原以为 X，实际是 Y」</b><br>这一句是整个学习过程里最值钱的东西。<b>这个领域没有公开的学习卡点数据</b>——调研已经确认了。所以你自己攒的这些认知差，是别人没有的资产。<br><br>攒够二十条，你对这件事的理解会超过绝大多数看了几十个教程的人。</div>
+
+  <h3>什么时候可以说自己过关了</h3>
+  <p>不看时间，不看自我感觉，只看两条：</p>
+  <ol class="plain">
+    <li><strong>判据过了</strong>——能交出这一级要求的东西</li>
+    <li><strong>能教会别人</strong>——你能把这一级的规范讲给一个不懂的人，他照做能得到同样结果</li>
+  </ol>
+  <p>第二条比第一条狠得多，但它是真判据。<strong>规范背得出不等于理解，能复现给别人才是。</strong></p>
+</section>
+
+<footer>
+  <b>这份教程的来源与证据等级</b><br><br>
+  <b>有出处的</b>：模型能力数据来自 VBench-2.0 基准（2025-03 那代模型，preprint 未经同行评审）· 8 阶段流水线与 5-Aspect 分镜规范来自 OpenMontage 开源项目源文件逐字读取 · 设定集六件套与三视图标准来自传统动画产业通行规范 · 五段式来自 Mx-Shell 公开的方法论 · 12 项破绽来自行业博客。<br><br>
+  <b>推论，非引文</b>：七级能力阶梯的编排 · 「三视图优于单张参考图」· 反推法的有效性 · 三个难度梯度的排序。<br><br>
+  <b>已知空白</b>：剪辑节奏、色彩管理、声音设计、叙事结构这几项，学术界尚无可测量的分解，本教程也给不出——只能回传统影视教材。批量生成后的自动筛选，未找到任何可引用的公开实现。<br><br>
+  <span style="color:var(--ink-3)">所有数字为 2026-08-20 快照。AI 视频半年换代，读到具体模型分数时请核对日期。</span>
+</footer>
+
+</div>
