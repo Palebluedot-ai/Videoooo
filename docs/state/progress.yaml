@@ -10,7 +10,7 @@ monitoring_summary: "2026-08-20 补上 SOP 缺口：从 OpenMontage cinematic �
 phases:
   # 路径 v3：能力难度轴（作品驱动 P1-P4 已废——那是生产流程轴，混淆两轴 = 第一个弯路）
   - id: "L0-preproduction"
-    file: "docs/notes/05-industrial-sop.md"
+    file: "docs/phases/phase-L0-preproduction.md"
     range: "1"
     self_contained: true
     status: "todo"            # 判据：交付角色 turnaround（5 视图+HEX色标）+ 5-Aspect 分镜表
@@ -59,6 +59,8 @@ notes: |
   而且学的是「怎么绕开」不是「怎么写更好的 prompt」。
   两份正文：04 能力阶梯（学什么/怎么算过关）+ 05 工业级 SOP（具体怎么做）。
   可打勾版：docs/notes/ladder.html（也已发布为 artifact）
+  L0 工作包已就位：templates/ 三个模板 + tools/check_shotlist.py 校验器
+  （正反两向已验：示例表退出码 0，故意写错退出码 1）。开工三步见 templates/README.md。
   L0 修正记录：原 L0「拉片找 12 破绽」是测试不是方法，已改为「前期设定」；
   12 破绽降级为 L1 起每级都过的验收 QC 门（工业界 QC gate 本就贯穿全程）。
   台账纪律不变：每条生成记「选没选中」——那一列是 L5 的训练数据。
