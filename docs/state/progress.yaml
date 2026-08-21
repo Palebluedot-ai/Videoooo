@@ -3,8 +3,8 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "框架 v1 已立（docs/ROADMAP.md）· 下一步 = F1 主播形象拍板 → M1 开工"
-current_bottleneck: "F1 主播形象方向（三选一）——唯一挡 M1 开工的决定"
+current_phase: "M1 主播诞生 · 进行中 —— F1 已拍板（VTuber 式漫画主播），设定集与提示词包制作中"
+current_bottleneck: "无阻塞。设定集文字层 AI 可完成；出图那一步需要生成入口（网页贴 prompt 或 .env 放 key，二选一）"
 monitoring_summary: "2026-08-20 两次纠偏收口：①验收归 AI（用户零基础无法自验收）②不做互动式派任务，改为产出物倒推的总框架 ROADMAP v1（M1 主播→M2 样片→M3 手册→M4 管线→M5 日更），框架本身迭代完善。"
 
 phases:
@@ -13,7 +13,7 @@ phases:
     file: "docs/ROADMAP.md"
     range: "1"
     self_contained: true
-    status: "todo"            # 产出：主播设定集(turnaround+色标)+场景图；前置：F1 拍板
+    status: "in_progress"     # F1 已拍板(b·VTuber 式)；产出：设定集(turnaround+色标)+场景图
     error_signals_unhandled: 0
   - id: "M2-first-episode"
     file: "docs/ROADMAP.md"
