@@ -3,9 +3,9 @@
 version: 1
 project: "Videoooo — AI video 学习仓"
 
-current_phase: "M1 主播诞生 · 进行中 —— F1 已拍板（VTuber 式漫画主播），设定集与提示词包制作中"
-current_bottleneck: "无阻塞。设定集文字层 AI 可完成；出图那一步需要生成入口（网页贴 prompt 或 .env 放 key，二选一）"
-monitoring_summary: "2026-08-20 两次纠偏收口：①验收归 AI（用户零基础无法自验收）②不做互动式派任务，改为产出物倒推的总框架 ROADMAP v1（M1 主播→M2 样片→M3 手册→M4 管线→M5 日更），框架本身迭代完善。"
+current_phase: "M1 · 设定集定稿（主播：知早/Zoe）—— 待出图：P0 基准图抽 5-10 张"
+current_bottleneck: "出图入口二选一：网页贴 P0（即梦/火山体验中心）出图发我，或 .env 放 key 我直接调 API"
+monitoring_summary: "2026-08-21 M1 设定集定稿：主播知早/Zoe（VTuber 式），3 视角设计×3 证伪×1 合成（7 agent 全过）。8 条 prompt 就位（turnaround 两段式绕五视图坑），Step0 逐字校验器正反验证通过。待出图。"
 
 phases:
   # 框架 v1（docs/ROADMAP.md）：里程碑以产出物定义；能力阶梯 L0-L6 降为随行的知识线
